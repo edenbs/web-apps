@@ -1,0 +1,6 @@
+<md-toolbar class="md-primary"  ng-include="'app/shell/toolbar/toolbar.html'"></md-toolbar>
+<md-content layout="row" flex md-colors="{ background: 'background-100'}" style="padding-left: 25px">
+    <md-sidenav class="md-sidenav-left md-whiteframe-2dp side-menu" md-component-id="sideNav"
+            ng-include="'app/shell/sidenav/sidenav.html'" layout="column"></md-sidenav>
+    <div ui-view flex layout="column"></div>
+</md-content>

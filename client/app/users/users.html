@@ -1,0 +1,35 @@
+<h1>Users Page</h1>
+<p>{{ message }}</p>
+
+<div class="users-page">
+    <md-content layout="column" flex>
+    
+            <md-table-container>
+    
+                <table   md-table md-row-select="options.rowSelection"
+                         multiple="{{options.multiSelect}}"
+                         ng-model="selected" md-progress="promise">
+                    <thead  md-head ng-if="!options.decapitate"  md-order="query.order" md-on-reorder="logOrder" >
+                    <tr  md-row >
+                        <th md-column >User name</th>
+                        <th md-column >Permission</th>
+                    </tr>
+                    </thead>
+
+                    <tbody md-body>
+                        <tr md-row md-select="user" md-select-id="firstName" md-auto-select ng-repeat="user in users | limitTo: query.limit : (query.page -1) * query.limit">
+                            <td  ng-model="user.firstName"
+                                 md-cell
+                                 ng-click="editComment($event, user)">
+                                {{ user.firstName }}
+                            </td>
+                            <td md-cell>{{ user.permission}}</td>
+                        </tr>
+        
+                        </tbody>
+                   
+                </table>
+            </md-table-container>
+          
+    </md-content>
+    </div>

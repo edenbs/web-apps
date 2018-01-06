@@ -1,0 +1,37 @@
+<div class="mdc-card" >
+    <section class="mdc-card__primary">
+        <h1 class="mdc-card__title mdc-card__title--large authTitle">Login Screen </h1>
+    </section>
+    <section class="mdc-card__supporting-text" >
+
+        <div ng-show="error" class="alert alert-danger">{{error}}</div>
+        <form name="loginForm" class="authForm" ng-submit="appLogin()" role="form">
+
+            <div class="group" >
+                <i class="fa fa-key"></i>
+                <input type="text" name="userid" id="userid" class="form-control" ng-model="user.userid" required />
+                <span class="highlight" ></span><span class="bar" ></span>  <label for="userid">User ID</label>
+                <span ng-show="loginForm.userid.$dirty && loginForm.userid.$error.required" class="help-block">User ID required</span>
+            </div>
+            <div class="group">
+                <i class="fa fa-lock"></i>
+                <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
+                <span class="highlight" required></span><span class="bar"></span>
+                <label for="password">Password</label>
+
+                <span ng-show="loginForm.password.$dirty && loginForm.password.$error.required" class="help-block">Password required </span>
+
+                <p class="authMess">{{ message }}</p>
+
+            </div>
+            <div class="form-actions">
+                <button  type="submit" ng-disabled="loginForm.$invalid ||loginForm.password.$error.required || loginForm.userid.$error.required" class="button buttonBlue">Login</button>
+                <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="/>
+
+                <button type="button" ng-disabled="false" class="button buttonBlue" ng-click="register()">Register</button>
+            </div>
+        </form>
+
+    </section>
+
+</div>
