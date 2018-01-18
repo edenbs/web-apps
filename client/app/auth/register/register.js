@@ -5,7 +5,7 @@ angular.module('classify')
 
         $stateProvider.state('register',{
             url:'/register',
-            templateUrl:'./app/auth/register/register.html',
+            templateUrl:'app/auth/register/register.html',
             controller:'RegisterController'
         })
     });

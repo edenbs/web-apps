@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('classify').controller('LoginController', function($scope,$location,$http,$state,$auth){
-
+angular.module('classify').controller('LoginController', function($scope, $location, $http, $state, $auth){
     $scope.message = "";
     $scope.error = "";
     $scope.loggedInUser = "";

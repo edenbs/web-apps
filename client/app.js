@@ -1,6 +1,13 @@
 'use strict';
 
-angular.module('classify', ["ui.router", "ngMaterial","angular-hamburglar","md.data.table","fixed.table.header"])
+angular.module('classify', [
+    'ui.router',
+    'ngMaterial',
+    'angular-hamburglar',
+    'md.data.table',
+    'fixed.table.header',
+    'ngResource'
+    ])
     .config(function($stateProvider,$locationProvider,$urlRouterProvider) {
         $urlRouterProvider
             .otherwise('/');

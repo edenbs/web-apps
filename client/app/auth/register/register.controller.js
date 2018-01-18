@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('classify').controller('RegisterController', function($scope,$http,$state,$auth)
-{
+angular.module('classify').controller('RegisterController', function($scope, $http, $state, $auth) {
     $scope.message = " ";
     $scope.error = " ";
 

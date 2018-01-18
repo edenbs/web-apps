@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('classify').factory('$auth', function ($q, $location,$http) {
+angular.module('classify')
+    .service('$auth', function ($q, $location,$http) {
     var auth = {};
     var currentUser = {};
     var usersLoginData = null;
