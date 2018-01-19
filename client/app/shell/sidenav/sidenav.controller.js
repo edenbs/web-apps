@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('classify')
-    .controller('SidenavController', function ($scope, $rootScope, $mdSidenav, $mdDialog,  $state, $auth) {
+    .controller('SidenavController', function ($scope, $rootScope, $mdSidenav, $mdDialog, $state, auth) {
 
         $scope.logout = function () {
-           var mess = $auth.logout();
+           var mess = auth.logout();
         };
 
-        // getting the current user json object
-       var loggedInUser =  $auth.currentUser().$$state.value;
+        // Getting the current user json object
+       var loggedInUser =  auth.getCurrentUser();
 
         $scope.loginMessage = "Hello! " + loggedInUser.firstName +  "  " +loggedInUser.lastName;
          $scope.menuList = [{
@@ -16,8 +16,8 @@ angular.module('classify')
             state: 'shell.home',
             iconClass: 'home'
         },{
-            text: 'Users',
-            state: 'shell.users',
+            text: 'Teachers',
+            state: 'shell.teachers',
             iconClass: 'users'
         },{
             text: 'Students',

@@ -25,11 +25,7 @@ export function create (req) {
     return errorIfNotTeacher(new User(data))
         .then(user => user.save())
         .then(errorIfEmpty)
-        .then(user => {
-            return {
-                token: ''
-            };
-        });
+        .then(_.noop);
 }
 
 export function update (req) {

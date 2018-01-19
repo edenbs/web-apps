@@ -1,23 +1,33 @@
 'use strict';
 
-angular.module('classify').controller('LoginController', function($scope, $location, $http, $state, $auth){
-    $scope.message = "";
-    $scope.error = "";
-    $scope.loggedInUser = "";
+angular.module('classify').controller('LoginController', function($scope, $state, auth){
+    $scope.user = {};
+    $scope.errors = {};
+    $scope.submitted = false;
 
-    $scope.appLogin = function () {
-        var result =  $auth.login($scope.user);
+    $scope.login = function (form) {
+        $scope.submitted = true;
 
-        $scope.message = result.$$state.value;
-    };
-
-    $scope.register = function () {
-        $scope.message = ' Register!';
-
-        $location.path("/register");
-    };
-
-    $scope.cancle = function () {
-        $scope.message = 'Cancle!';
+        if (form.$valid) {
+            auth.login({
+                id: $scope.user.id,
+                password: $scope.user.password
+            })
+                .then(function () {
+                    // Logged in, redirect to home
+                    $state.go('shell.home');
+                })
+                .catch(function (err) {
+                    if (err.name === 'IncorrectUsernameError' || err.name === 'IncorrectPasswordError') {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .position('bottom right')
+                                .content('email or password incorrect')
+                                .hideDelay(6000)
+                        );
+                    }
+                    $scope.errors.other = err.message;
+                });
+        }
     };
 });

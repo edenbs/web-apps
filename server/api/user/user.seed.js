@@ -4,6 +4,7 @@ export default {
     dependencies: [School],
     seed: schools => [{
         id: 'admin',
+        password: '123123123',
         name: {
             first: 'admin'
         },

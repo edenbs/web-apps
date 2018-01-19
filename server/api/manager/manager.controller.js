@@ -25,11 +25,7 @@ export function create (req) {
     return errorIfNotManager(new User(data))
         .then(user => user.save())
         .then(errorIfEmpty)
-        .then(user => {
-            return {
-                token: ''
-            };
-        });
+        .then(_.noop);
 }
 
 // Update an existing user in DB

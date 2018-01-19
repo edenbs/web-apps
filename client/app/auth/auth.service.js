@@ -1,122 +1,75 @@
 'use strict';
 
 angular.module('classify')
-    .service('$auth', function ($q, $location,$http) {
-    var auth = {};
-    var currentUser = {};
-    var usersLoginData = null;
+    .service('auth', function Auth($location, $rootScope, $http, $users, $cookieStore, $q, $state) {
+        var promise = null;
+        var currentUser = null;
+        var self = this;
 
-    // getting the data of the users
-    $http.get('app/auth/user-data.json').then(function (success) {
-            usersLoginData = success.data;
+        var initCurrentUser = function () {
+            promise = $users.me().$promise;
+            promise.then(function (user) {
+                currentUser = user;
+                promise = null;
+            });
+        };
+
+        if ($cookieStore.get('token')) {
+            initCurrentUser();
         }
-    , function (error) {
+
+        this.login = function (user) {
+            return $http.post('/auth', {
+                id: user.id,
+                password: user.password
+            })
+                .then(function (data) {
+                    $cookieStore.put('token', data.data.token);
+                    initCurrentUser();
+                })
+                .catch(function () {
+                    self.logout();
+                });
+        };
+
+        this.logout = function () {
+            $cookieStore.remove('token');
+            currentUser = null;
+            $state.go('login');
+        };
+
+        this.changePassword = function (oldPassword, newPassword) {
+            return $users.changePassword({id: currentUser._id}, {
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            }).$promise;
+        };
+
+        this.getCurrentUser = function () {
+            return currentUser;
+        };
+
+        this.isLoggedInAsync = function () {
+            if (promise) {
+                return promise.then(function () {
+                    return true;
+                }).catch(function () {
+                    return false
+                });
+            } else {
+                return $q.resolve(!!currentUser);
+            }
+        };
+
+        this.getToken = function () {
+            return $cookieStore.get('token');
+        };
+
+        this.hasRole = function (role) {
+            if (!currentUser) {
+                return false;
+            }
+
+            return (role === 'manager' && currentUser.type === 'teacher' && currentUser.manager) || role === currentUser.type;
+        };
     });
-
-    // login the user if correct
-    auth.isLoggedIn = function () {
-        return $q(function (resolve, reject)
-        {
-               if(currentUser){
-                   resolve(true);
-               }
-               else {
-                   reject("No user");
-               }
-         });
-    };
-
-    auth.currentUser = function () {
-        console.log(currentUser);
-        return $q(function (resolve, reject) {
-            if (currentUser!= null)
-            {
-                return resolve(currentUser);
-            }
-            else{
-                return reject();
-            }
-        });
-    };
-
-    auth.login = function (user)
-    {
-        return $q(function (resolve, reject)
-        {
-           if(usersLoginData!= null)
-            {
-                // checking if there is user By that name
-                var foundUser = _.find(usersLoginData, function (o) {
-                    if (o.userid == user.userid)
-                    {
-                        return o;
-                    } else {
-                        return null;
-                    }
-                });
-
-                if (foundUser == null)
-                {
-                    return reject("user name doesnt exist");
-                }
-                else if (foundUser.password ==user.password)
-                {
-                    currentUser = foundUser;
-
-                    $location.path("/home");
-
-                    return resolve('Logged in!');
-                }
-                else {
-                    return reject ("Wrong Password")
-                }
-             }
-
-        });
-    };
-
-    auth.register = function(user)
-    {
-        return $q(function (resolve, reject)
-        {
-              // checking if there is user By that name
-                var foundUser = _.find(usersLoginData, function (o) {
-                    if (o.userid == user.userid)
-                    {
-                        return o;
-                    } else {
-                        return null;
-                    }
-                });
-
-                if (foundUser != null)
-                {
-                    return reject("user already exist");
-                }
-                else
-                {
-                    var json = JSON.stringify(user);
-
-                     usersLoginData.push(user);
-                    currentUser = user;
-                    $location.path("/login");
-                    return resolve('Registered!');
-
-
-                }
-        });
-    };
-
-    auth.logout = function () {
-        currentUser = "";
-
-        return $q(function (resolve, reject)
-        {
-            $location.path("/login");
-            return resolve();
-
-        });
-    };
-
-    return auth;
-});

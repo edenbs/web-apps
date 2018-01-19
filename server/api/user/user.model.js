@@ -58,6 +58,5 @@ userSchema.pre('save', function(next) {
 // Use promises instead of callbacks
 userSchema.methods.setPassword = pify(userSchema.methods.setPassword);
 userSchema.methods.changePassword = pify(userSchema.methods.changePassword);
-userSchema.methods.authenticate = pify(userSchema.methods.authenticate);
 
 export default createSeedModel('User', userSchema, seed);
