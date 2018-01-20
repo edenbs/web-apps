@@ -34,12 +34,6 @@ userSchema
     });
 
 userSchema
-    .virtual('name.full')
-    .get(function () {
-        return `${this.name.first} ${this.name.last}`;
-    });
-
-userSchema
     .virtual('password')
     .set(function (password) {
         this._password = password;

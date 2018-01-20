@@ -6,6 +6,9 @@ angular.module('classify')
             url: '/teachers',
             templateUrl:'app/teachers/teachers.html',
             controller: 'TeachersController',
+            data: {
+                requiredRole: 'manager'
+            },
             resolve: {
                 teachers: function($teachers) {
                     return $teachers.query().$promise;

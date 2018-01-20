@@ -13,11 +13,6 @@ const validateJwt = pify(expressJwt({secret: process.env.SESSION_SECRET}));
  */
 export function isAuthenticated () {
   return (req, res) => {
-    // Allow access_token to be passed through query parameter as well
-    if (req.query && req.query.hasOwnProperty('access_token')) {
-      req.headers.authorization = `Bearer ${req.query.access_token}`;
-    }
-
     return validateJwt(req, res)
       .then(() => {
         return User.findById(req.user._id);
@@ -36,8 +31,7 @@ export function hasRole (role) {
   return (req, res) => {
     return isAuthenticated()(req, res)
       .then(() => {
-        if (!((role === 'manager' && req.user.type === 'teacher' && req.user.manager) ||
-          req.user.type === role)) {
+        if (req.user.role !== role) {
           return Promise.reject(createError(403));
         }
       });

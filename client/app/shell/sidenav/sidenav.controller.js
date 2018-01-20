@@ -2,30 +2,32 @@
 
 angular.module('classify')
     .controller('SidenavController', function ($scope, $rootScope, $mdSidenav, $mdDialog, $state, auth) {
-
-        $scope.logout = function () {
-           var mess = auth.logout();
+        $scope.toggleMenu = function () {
+            $mdSidenav('sideNav').toggle();
         };
 
-        // Getting the current user json object
-       var loggedInUser =  auth.getCurrentUser();
+        $scope.logout = function () {
+           auth.logout();
+        };
 
-        $scope.loginMessage = "Hello! " + loggedInUser.firstName +  "  " +loggedInUser.lastName;
-         $scope.menuList = [{
+        $scope.user =  auth.getCurrentUser();
+
+        var menuList = [{
             text: 'Home',
             state: 'shell.home',
             iconClass: 'home'
         },{
             text: 'Teachers',
             state: 'shell.teachers',
-            iconClass: 'users'
+            iconClass: 'account'
         },{
             text: 'Students',
             state: 'shell.students',
-            iconClass: 'students'
+            iconClass: 'account'
         }];
 
-        $scope.toggleMenu = function () {
-            $mdSidenav('sideNav').toggle();
-        }
+        $scope.menuList = _.filter(menuList, function (item) {
+            var role = ($state.get(item.state).data || {}).requiredRole;
+            return role ? auth.hasRole(role) : true;
+        });
     });

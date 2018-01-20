@@ -1,10 +1,10 @@
 <div layout="column" flex md-colors="{background: 'primary-50'}" layout-align="center center">
     <md-card layout="column" layout-align="center center" class="login-card">
-        <md-subheader>
+        <md-card-title>
             <div layout="row" layout-align="center center">
                 <span class="md-headline">Login</span>
             </div>
-        </md-subheader>
+        </md-card-title>
         <form class="form" name="loginForm" layout="column" layout-align="center center" layout-padding>
             <md-input-container class="input-reverse md-accent" flex="85">
                 <label>ID</label>
@@ -15,12 +15,11 @@
                 </div>
             </md-input-container>
             <md-input-container class="input-reverse md-accent" flex="85">
-                <label>password</label>
-                <input ng-model="user.password" type="password" required name="password" minlength="8" />
+                <label>Password</label>
+                <input ng-model="user.password" type="password" required name="password" />
                 <div ng-messages="loginForm.password.$error"
                      ng-show="loginForm.password.$invalid && loginForm.password.$touched">
                     <div ng-message="required">required</div>
-                    <div ng-message="minlength">min length is 8 digits</div>
                 </div>
             </md-input-container>
             <div layout="row" layout-align="space-between">

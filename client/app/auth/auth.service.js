@@ -70,6 +70,6 @@ angular.module('classify')
                 return false;
             }
 
-            return (role === 'manager' && currentUser.type === 'teacher' && currentUser.manager) || role === currentUser.type;
+            return role === currentUser.role;
         };
     });

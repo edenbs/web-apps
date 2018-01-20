@@ -4,13 +4,15 @@ export default {
     dependencies: [School],
     seed: schools => [{
         id: 'admin',
-        password: '123123123',
+        password: '123',
         name: {
-            first: 'admin'
+            first: 'admin',
+            last: 'admin'
         },
         role: 'admin'
     }, {
         id: 'manager0',
+        password: '123',
         name: {
             first: 'Shula',
             last: 'Cohen'
@@ -19,6 +21,7 @@ export default {
         school: schools[0]
     },{
         id: 'editor0',
+        password: '123',
         name: {
             first: 'Merav',
             last: 'Sasson'
@@ -27,6 +30,7 @@ export default {
         school: schools[0]
     }, {
         id: 'viewer0',
+        password: '123',
         name: {
             first: 'Sara',
             last: 'Levi'
@@ -35,6 +39,7 @@ export default {
         school: schools[0]
     }, {
         id: 'manager1',
+        password: '123',
         name: {
             first: 'Smadar',
             last: 'Schultz'
@@ -43,6 +48,7 @@ export default {
         school: schools[1]
     },{
         id: 'editor1',
+        password: '123',
         name: {
             first: 'Eti',
             last: 'Raul'
@@ -51,6 +57,7 @@ export default {
         school: schools[1]
     }, {
         id: 'viewer1',
+        password: '123',
         name: {
             first: 'Clara',
             last: 'Amsalem'

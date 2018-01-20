@@ -3,48 +3,73 @@
 angular.module('classify', [
     'ui.router',
     'ngMaterial',
+    'ngMessages',
     'angular-hamburglar',
     'md.data.table',
     'fixed.table.header',
     'ngResource',
     'ngCookies'
     ])
-    .config(function($stateProvider, $locationProvider, $urlRouterProvider, $mdThemingProvider) {
+    .config(function($httpProvider, $stateProvider, $locationProvider, $urlRouterProvider, $mdThemingProvider) {
         $urlRouterProvider
             .otherwise('/');
 
         $locationProvider.html5Mode(true);
-        //$httpProvider.interceptors.push('authInterceptor');
+        $httpProvider.interceptors.push('authInterceptor');
 
         $mdThemingProvider.theme('default')
             .primaryPalette('amber')
             .accentPalette('deep-orange');
     })
-    .run(function ($rootScope, auth, $state) {
-        // Redirect to login if you're not logged in
-        $rootScope.$on('$stateChangeStart', function (event, next) {
-            next.data = next.data || {};
+    .factory('authInterceptor', function ($q, $cookieStore, $injector) {
+        return {
+            // Add authorization token to headers
+            request: function (config) {
+                config.headers = config.headers || {};
+                if ($cookieStore.get('token')) {
+                    config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
+                }
+                return config;
+            },
 
-            if (!next.data.loginNotRequired) {
-                auth.isLoggedInAsync()
+            // Intercept 401s and redirect you to login
+            responseError: function (response) {
+                if (response.status === 401) {
+                    $injector.get('$state').go('login');
+
+                    // remove any stale tokens
+                    $cookieStore.remove('token');
+                }
+                else if (response.status === 403) {
+                    $injector.get('$state').go('shell.home');
+                }
+
+                return $q.reject(response);
+            }
+        };
+    })
+    .run(function ($rootScope, auth, $state, $transitions) {
+        // Redirect to login if you're not logged in
+        $transitions.onStart({}, function (trans) {
+            var data = trans.$to().data || {};
+
+            if (!data.loginNotRequired) {
+                return auth.isLoggedInAsync()
                     .then(function (loggedIn) {
                         if (loggedIn) {
-                            if (next.data.requiredRole && !Auth.hasRole(next.data.requiredRole)) {
-                                event.preventDefault();
-                                $state.go('shell.home');
+                            if (data.requiredRole && !auth.hasRole(data.requiredRole)) {
+                                return trans.router.stateService.target('shell.home');
                             }
                         } else {
-                            event.preventDefault();
-                            $state.go('login');
+                            return trans.router.stateService.target('login');
                         }
                     });
             }
-            else if (next.data.loggedInForbidden) {
-                auth.isLoggedInAsync()
+            else if (data.loggedInForbidden) {
+                return auth.isLoggedInAsync()
                     .then(function (loggedIn) {
                         if (loggedIn) {
-                            event.preventDefault();
-                            $state.go('shell.home');
+                            return trans.router.stateService.target('shell.home');
                         }
                     });
             }

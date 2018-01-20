@@ -2,17 +2,13 @@
 
     <md-toolbar class="md-tall md-hue-2 user-cover" layout="row" layout-align="start end">
         <div class="md-toolbar-tools" >
-            <div class="user-logged-image">
-                <i class="mdi mdi-account-circle" md-colors="{color: 'grey-A100-0.7'}"></i>
-            </div>
             <h2>
-                {{ loginMessage }}
+                Hello {{user.name.first}} {{user.name.last}}
             </h2>
         </div>
     </md-toolbar>
     <div layout="column" flex>
         <md-list flex>
-
             <md-list-item ng-repeat="item in menuList" ui-sref-active="md-raised" ui-sref="{{item.state}}"
                           ng-click="toggleMenu()">
                 <div layout="row" layout-align="center center">
@@ -26,7 +22,7 @@
             <md-list-item ng-click="logout()">
                 <div layout="row" layout-align="center center">
                     <i class="mdi mdi-logout" flex="25"></i>
-                    <span flex>logout</span>
+                    <span flex>Logout</span>
                 </div>
             </md-list-item>
         </md-list>
