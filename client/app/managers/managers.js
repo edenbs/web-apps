@@ -9,7 +9,13 @@ angular.module('classify')
             resolve: {
                 managers: function($managers) {
                     return $managers.query().$promise;
+                },
+                schools: function($schools) {
+                    return $schools.query().$promise;
                 }
+            },
+            data: {
+                requiredRole: 'admin'
             }
         })
     });

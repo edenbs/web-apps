@@ -21,6 +21,10 @@ angular.module('classify')
             state: 'shell.teachers',
             iconClass: 'account'
         },{
+            text: 'Managers',
+            state: 'shell.managers',
+            iconClass: 'account'
+        },{
             text: 'Students',
             state: 'shell.students',
             iconClass: 'account'

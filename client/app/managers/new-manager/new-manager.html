@@ -1,26 +1,25 @@
 <md-dialog flex="30">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <span class="md-headline">Create New Teacher</span>
+            <span class="md-headline">Create New Manager</span>
         </div>
     </md-toolbar>
     <md-dialog-contnet layout="column" class="md-dialog-content">
         <md-input-container>
             <label>ID</label>
-            <input ng-model="teacher.id" />
+            <input ng-model="manager.id" />
         </md-input-container>
         <md-input-container>
             <label>First Name</label>
-            <input ng-model="teacher.name.first" />
+            <input ng-model="manager.name.first" />
         </md-input-container>
         <md-input-container>
             <label>Last Name</label>
-            <input ng-model="teacher.name.last" />
+            <input ng-model="manager.name.last" />
         </md-input-container>
         <md-input-container>
-            <md-select ng-model="teacher.role" class="md-no-underline">
-                <md-option ng-value="viewer">Viewer</md-option>
-                <md-option ng-value="editor">Editor</md-option>
+            <md-select ng-model="manager.school" class="md-no-underline">
+                <md-option ng-repeat="school in schools" ng-value="school._id">{{school.name}}</md-option>
             </md-select>
         </md-input-container>
     </md-dialog-contnet>

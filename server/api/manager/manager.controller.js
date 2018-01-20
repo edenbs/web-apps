@@ -3,7 +3,7 @@ import createError from 'http-errors';
 import _ from 'lodash';
 
 const errorIfEmpty = result => result || Promise.reject(createError(404));
-const errorIfNotManager = user => user.role != 'manager' ? user : Promise.reject(createError(400));
+const errorIfNotManager = user => user.role === 'manager' ? user : Promise.reject(createError(400));
 
 // Get list of managers
 export function index() {
@@ -20,10 +20,11 @@ export function find (req) {
 
 // Create new user with manager role
 export function create (req) {
-    const data = req.body;
+    const data = _.pick(req.body, ['id', 'name', 'school']);
 
-    return errorIfNotManager(new User(data))
-        .then(user => user.save())
+    data.role = 'manager';
+
+    return new User(data).save()
         .then(errorIfEmpty)
         .then(_.noop);
 }
@@ -41,8 +42,10 @@ export function update (req) {
 
 // Delete a user
 export function remove (req) {
-    return User.findOneAndRemove({_id: req.params.id})
+    return User.findById(req.params.id)
         .then(errorIfEmpty)
+        .then(errorIfNotManager)
+        .then(user => user.remove())
         .then(_.noop);
 }
 

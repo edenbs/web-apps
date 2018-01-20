@@ -1,47 +1,49 @@
-<h1>Teachers Management</h1>
-
-<div>
-    <md-content layout="column" flex>
-    
-            <md-table-container>
-    
-                <table   md-table md-row-select="options.rowSelection"
-                         multiple="{{options.multiSelect}}"
-                         ng-model="selected" md-progress="promise">
-                    <thead  md-head ng-if="!options.decapitate"  md-order="query.order" md-on-reorder="logOrder" >
-                    <tr  md-row >
-                        <th md-column >First Name</th>
-                        <th md-column >Last Name</th>
-                        <th md-column >Role</th>
+<div layout="column" layout-margin>
+    <md-card>
+        <md-toolbar class="md-table-toolbar md-default" ng-show="!selected.length">
+            <div class="md-toolbar-tools">
+                <span>Managers Management</span>
+            </div>
+        </md-toolbar>
+        <md-toolbar class="md-table-toolbar alternate" ng-show="selected.length">
+            <div class="md-toolbar-tools">
+                <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="deleteItems()">
+                    <md-icon class="mdi mdi-delete mdi-24px"></md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-table-container>
+            <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+                <thead md-head md-order="query.order" md-on-reorder="getItems" >
+                    <tr md-row>
+                        <th md-column md-order-by="id">ID</th>
+                        <th md-column md-order-by="name.first">First Name</th>
+                        <th md-column md-order-by="name.last">Last Name</th>
+                        <th md-column md-order-by="school">School</th>
                     </tr>
-                    </thead>
-
-                    <tbody md-body>
-                        <tr md-row md-select="teacher" md-select-id="firstName" md-auto-select ng-repeat="teacher in teachers | limitTo: query.limit : (query.page -1) * query.limit">
-                            <td  ng-model="teacher.name.first"
-                                 md-cell
-                                 ng-click="editFirstName($event, teacher)">
-                                {{ teacher.name.first }}
-                            </td>
-                            <td  ng-model="teacher.name.last"
-                                 md-cell
-                                 ng-click="editLastName($event, teacher)">
-                                {{ teacher.name.last }}
-                            </td>
-                            <td md-cell>
-                                <md-input-container>
-                                    <md-select ng-model="teacher.role" class="md-no-underline" ng-change="changeRole(teacher)">
-                                        <md-option value="viewer">Viewer</md-option>
-                                        <md-option value="editor">Editor</md-option>
-                                    </md-select>
-                                </md-input-container>
-                            </td>
-                        </tr>
-        
-                        </tbody>
-                   
-                </table>
-            </md-table-container>
-          
-    </md-content>
-    </div>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="item" md-select-id="id" md-auto-select ng-repeat="item in items">
+                        <td md-cell>{{ item.id }}</td>
+                        <td md-cell>{{ item.name.first }}</td>
+                        <td md-cell>{{ item.name.last }}</td>
+                        <td md-cell>
+                            <md-input-container>
+                                <md-select ng-model="item.school" class="md-no-underline" ng-change="changeSchool(item)">
+                                    <md-option ng-repeat="school in schools" ng-value="school._id">{{school.name}}</md-option>
+                                </md-select>
+                            </md-input-container>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-table-container>
+        <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{items.length}}" md-on-paginate="getItems"></md-table-pagination>
+    </md-card>
+</div>
+<md-button class="md-fab md-fab-bottom-right md-primary" layout layout-align="center center"
+           ng-click="addItem($event)" aria-label="Add new constraint">
+    <i class="mdi mdi-plus mdi-24px"></i>
+</md-button>

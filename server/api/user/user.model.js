@@ -3,6 +3,7 @@ import {createSeedModel} from 'mongoose-plugin-seed';
 import seed from './user.seed'
 import passportLocalMongoose from 'passport-local-mongoose';
 import pify from 'pify';
+import idvalidator from 'mongoose-id-validator';
 
 const Schema = mongoose.Schema;
 const roles = ['admin', 'manager', 'editor', 'viewer'];
@@ -28,6 +29,7 @@ const userSchema = new Schema({
     }
 });
 
+userSchema.plugin(idvalidator);
 userSchema
     .plugin(passportLocalMongoose, {
         usernameField: 'id'
