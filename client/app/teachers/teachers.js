@@ -11,7 +11,7 @@ angular.module('classify')
             },
             resolve: {
                 teachers: function($teachers) {
-                    return $teachers.query().$promise;
+                    return $teachers.paginate().$promise;
                 }
             }
         })

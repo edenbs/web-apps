@@ -4,6 +4,7 @@ import seed from './user.seed'
 import passportLocalMongoose from 'passport-local-mongoose';
 import pify from 'pify';
 import idvalidator from 'mongoose-id-validator';
+import mongoosePaginate from 'mongoose-paginate';
 
 const Schema = mongoose.Schema;
 const roles = ['admin', 'manager', 'editor', 'viewer'];
@@ -11,7 +12,8 @@ const roles = ['admin', 'manager', 'editor', 'viewer'];
 const userSchema = new Schema({
     id: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     name: {
         first: String,
@@ -34,6 +36,7 @@ userSchema
     .plugin(passportLocalMongoose, {
         usernameField: 'id'
     });
+userSchema.plugin(mongoosePaginate);
 
 userSchema
     .virtual('password')

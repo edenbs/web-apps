@@ -6,10 +6,10 @@ const errorIfEmpty = result => result || Promise.reject(createError(404));
 const errorIfNotManager = user => user.role === 'manager' ? user : Promise.reject(createError(400));
 
 // Get list of managers
-export function index() {
-    return User.find({
+export function index(req) {
+    return User.paginate({
         role: 'manager'
-    });
+    }, req.query);
 }
 
 // Get a single user

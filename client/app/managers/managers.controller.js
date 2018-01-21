@@ -6,16 +6,21 @@ angular.module('classify').controller('ManagersController', function($scope, $ht
     $scope.selected = [];
 
     $scope.query = {
-        order: 'name.first',
-        limit: 1,
+        sort: 'name.first',
+        limit: 5,
         page: 1
     };
 
     $scope.getItems = function () {
-        $scope.promise = $managers.query($scope.query).$promise.then(function (items) {
+        $scope.promise = $managers.paginate($scope.query).$promise.then(function (items) {
             $scope.selected = [];
             $scope.items = items;
         });
+    };
+
+    $scope.onOrderChange = function (sort) {
+        $scope.query.sort = sort;
+        return $scope.getItems();
     };
 
     $scope.deleteItems = function () {
@@ -38,10 +43,14 @@ angular.module('classify').controller('ManagersController', function($scope, $ht
             }
         })
             .then(function (manager) {
-                return $managers.save(manager);
+                return $managers.save(manager).$promise
             })
             .then(function () {
+                alert('manager added successfully');
                 $scope.getItems();
+            })
+            .catch(function () {
+                alert('error adding manager');
             });
     };
 

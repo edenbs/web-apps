@@ -18,13 +18,8 @@ angular.module('classify').controller('LoginController', function($scope, $state
                     $state.go('shell.home');
                 })
                 .catch(function (err) {
-                    if (err.name === 'IncorrectUsernameError' || err.name === 'IncorrectPasswordError') {
-                        $mdToast.show(
-                            $mdToast.simple()
-                                .position('bottom right')
-                                .content('email or password incorrect')
-                                .hideDelay(6000)
-                        );
+                    if (err.data.name === 'IncorrectUsernameError' || err.data.name === 'IncorrectPasswordError') {
+                        alert(err.data.message);
                     }
                     $scope.errors.other = err.message;
                 });

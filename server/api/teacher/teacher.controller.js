@@ -8,10 +8,10 @@ const errorIfNotSchool = (user, school) => user.school.equals(school) ? user : P
 
 // Get list of teachers of the school
 export function index(req) {
-    return User.find({
+    return User.paginate({
         school: req.user.school,
         role: { $in: ['editor', 'viewer'] }
-    });
+    }, req.query);
 }
 
 // Create new user

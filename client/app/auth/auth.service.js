@@ -27,8 +27,9 @@ angular.module('classify')
                     $cookieStore.put('token', data.data.token);
                     initCurrentUser();
                 })
-                .catch(function () {
+                .catch(function (err) {
                     self.logout();
+                    throw err;
                 });
         };
 

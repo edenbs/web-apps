@@ -6,16 +6,16 @@ angular.module('classify')
             url: '/managers',
             templateUrl:'app/managers/managers.html',
             controller: 'ManagersController',
+            data: {
+                requiredRole: 'admin'
+            },
             resolve: {
                 managers: function($managers) {
-                    return $managers.query().$promise;
+                    return $managers.paginate().$promise;
                 },
                 schools: function($schools) {
                     return $schools.query().$promise;
                 }
-            },
-            data: {
-                requiredRole: 'admin'
             }
         })
     });

@@ -5,16 +5,21 @@ angular.module('classify').controller('TeachersController', function($scope, $ht
     $scope.selected = [];
 
     $scope.query = {
-        order: 'name.first',
-        limit: 1,
+        sort: 'name.first',
+        limit: 5,
         page: 1
     };
 
     $scope.getItems = function () {
-        $scope.promise = $teachers.query($scope.query).$promise.then(function (items) {
+        $scope.promise = $teachers.paginate($scope.query).$promise.then(function (items) {
             $scope.selected = [];
             $scope.items = items;
         });
+    };
+
+    $scope.onOrderChange = function (sort) {
+        $scope.query.sort = sort;
+        return $scope.getItems();
     };
 
     $scope.deleteItems = function () {
@@ -34,10 +39,14 @@ angular.module('classify').controller('TeachersController', function($scope, $ht
             clickOutsideToClose: true
         })
             .then(function (teacher) {
-                return $teachers.save(teacher);
+                return $teachers.save(teacher).$promise;
             })
             .then(function () {
+                alert('teacher added successfully');
                 $scope.getItems();
+            })
+            .catch(function (err) {
+                alert('error adding teacher')
             });
     };
 
