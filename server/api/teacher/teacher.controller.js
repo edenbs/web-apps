@@ -19,6 +19,7 @@ export function create (req) {
     const data = _.pick(req.body, ['id', 'name', 'role']);
 
     data.school = req.user.school;
+    data.password = '123';
 
     return errorIfNotTeacher(new User(data))
         .then(user => user.save())

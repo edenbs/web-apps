@@ -23,6 +23,7 @@ export function create (req) {
     const data = _.pick(req.body, ['id', 'name', 'school']);
 
     data.role = 'manager';
+    data.password = '123';
 
     return new User(data).save()
         .then(errorIfEmpty)
