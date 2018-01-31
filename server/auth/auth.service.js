@@ -3,6 +3,9 @@ import expressJwt from 'express-jwt';
 import pify from 'pify';
 import User from '../api/user/user.model';
 import createError from 'http-errors';
+import _ from 'lodash';
+import arrify from 'arrify';
+
 const validateJwt = pify(expressJwt({secret: process.env.SESSION_SECRET}));
 
 /**
@@ -31,8 +34,9 @@ export function hasRole (role) {
   return (req, res) => {
     return isAuthenticated()(req, res)
       .then(() => {
-        if (req.user.role !== role) {
-          return Promise.reject(createError(403));
+
+          if(!_.includes(arrify(role), req.user.role)) {
+            return Promise.reject(createError(403));
         }
       });
   };

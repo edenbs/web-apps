@@ -7,7 +7,7 @@ angular.module('classify')
             templateUrl:'app/managers/managers.html',
             controller: 'ManagersController',
             data: {
-                requiredRole: 'admin'
+                requiredRole: ['admin']
             },
             resolve: {
                 managers: function($managers) {

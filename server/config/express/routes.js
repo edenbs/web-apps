@@ -4,6 +4,7 @@ import schoolRoute from '../../api/school';
 import userRoute from '../../api/user';
 import managerRoute from '../../api/manager';
 import teacherRoute from '../../api/teacher';
+import studentRoute from '../../api/student';
 import authRoute from '../../auth';
 
 export default app => {
@@ -11,6 +12,7 @@ export default app => {
     app.use('/api/users', userRoute);
     app.use('/api/managers', managerRoute);
     app.use('/api/teachers', teacherRoute);
+    app.use('/api/students', studentRoute);
 
     app.use('/auth', authRoute);
 

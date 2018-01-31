@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('classify').controller('TeachersController', function($scope, $http, $mdEditDialog, teachers, $teachers, $q, $mdDialog) {
+angular.module('classify').controller('TeachersController', function($scope, $mdEditDialog, teachers, $teachers, $q, $mdDialog) {
     $scope.items = teachers;
     $scope.selected = [];
 

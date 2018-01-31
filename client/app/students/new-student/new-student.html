@@ -1,0 +1,34 @@
+<md-dialog flex="30">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span class="md-headline">Add New Student</span>
+        </div>
+    </md-toolbar>
+    <md-dialog-contnet layout="column" class="md-dialog-content">
+        <md-input-container>
+            <label>ID</label>
+            <input ng-model="student.id" />
+        </md-input-container>
+        <md-input-container>
+            <label>First Name</label>
+            <input ng-model="student.name.first" />
+        </md-input-container>
+        <md-input-container>
+            <label>Last Name</label>
+            <input ng-model="student.name.last" />
+        </md-input-container>
+        <md-input-container>
+            <md-select ng-model="student.gender" class="md-no-underline">
+                <md-option value="female">Female</md-option>
+                <md-option value="male">Male</md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container>
+            <label>Class</label>
+            <input ng-model="student.class" />
+        </md-input-container>
+    </md-dialog-contnet>
+    <md-dialog-actions>
+        <md-button ng-click="save()" class="md-primary">Save</md-button>
+    </md-dialog-actions>
+</md-dialog>

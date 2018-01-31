@@ -6,6 +6,14 @@ angular.module('classify')
         $stateProvider.state('shell.students',{
                 url: '/students',
                 templateUrl: 'app/students/students.html',
-                controller: 'StudentsController'
+                controller: 'StudentsController',
+                resolve: {
+                    students: function($students) {
+                        return $students.paginate().$promise;
+                    }
+                },
+                data: {
+                    requiredRole: ['manager', 'editor', 'viewer']
+                }
             })
          });

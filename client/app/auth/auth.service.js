@@ -71,6 +71,6 @@ angular.module('classify')
                 return false;
             }
 
-            return role === currentUser.role;
+            return _.includes(role, currentUser.role);
         };
     });
