@@ -6,7 +6,25 @@ const errorIfEmpty = result => result || Promise.reject(createError(404));
 const errorIfNotSchool = (student, school) => student.school.equals(school) ? student : Promise.reject(createError(403));
 
 export function index(req) {
-    return Student.paginate({school: req.user.school}, req.query);
+    var query = {school: req.user.school};
+
+    if (req.query.name) {
+        req.query.name = JSON.parse(req.query.name);
+
+        if (req.query.name.first) {
+            query['name.first'] = {$regex: req.query.name.first, $options: 'i'};
+        }
+
+        if (req.query.name.last) {
+            query['name.last'] = {$regex: req.query.name.last, $options: 'i'};
+        }
+    }
+
+    if (req.query.class) {
+        query['class'] = req.query.class;
+    }
+
+    return Student.paginate(query, req.query);
 }
 
 export function create (req) {

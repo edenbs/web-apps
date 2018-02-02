@@ -8,10 +8,16 @@ angular.module('classify')
 
         var initCurrentUser = function () {
             promise = $users.me().$promise;
-            promise.then(function (user) {
+            promise
+                .then(function (user) {
                 currentUser = user;
                 promise = null;
-            });
+            })
+                .catch(function(err) {
+                    $cookieStore.remove('token');
+
+                    return $q.reject(err);
+                });
         };
 
         if ($cookieStore.get('token')) {

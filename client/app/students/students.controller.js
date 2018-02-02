@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 
 angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $q, $mdDialog) {
     $scope.items = students;
@@ -20,7 +20,8 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             }
         },
         class: {
-            'required': true
+            'required': true,
+            'ng-pattern':/^(\p{L}{1,2}-[1-9][0-9]?)$/
         },
         avgGrade: {
             'required': true,
@@ -38,12 +39,23 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             }
         },
         class: {
-            'required': 'Class is required'
+            'required': 'Class is required',
+            'pattern': 'Class must be formatted {class}-{number}'
         },
         avgGrade: {
             'required': 'Avergae grade is required',
             'pattern': 'Avergae grade must be between 0 to 100'
         }
+    };
+
+    $scope.onFilter = function () {
+        $scope.query.page = 1;
+        return $scope.getItems();
+    };
+
+    $scope.clearFilter = function (name) {
+        _.set($scope.query, name, '');
+        return $scope.getItems();
     };
 
     $scope.getItems = function () {

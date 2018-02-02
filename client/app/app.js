@@ -8,7 +8,8 @@ angular.module('classify', [
     'md.data.table',
     'fixed.table.header',
     'ngResource',
-    'ngCookies'
+    'ngCookies',
+    'angularXRegExp'
     ])
     .config(function($httpProvider, $stateProvider, $locationProvider, $urlRouterProvider, $mdThemingProvider) {
         $urlRouterProvider

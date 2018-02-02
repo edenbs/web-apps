@@ -1,4 +1,4 @@
-<div layout="column" layout-margin>
+﻿<div layout="column" layout-margin>
     <md-card>
         <md-toolbar class="md-table-toolbar md-default" ng-show="!selected.length">
             <div class="md-toolbar-tools">
@@ -14,6 +14,40 @@
                 </md-button>
             </div>
         </md-toolbar>
+        <form name="studentFilterForm" layout="row" layout-margin>
+            <md-icon>
+                <i ng-hide="query.name.first" class="mdi mdi-filter mdi-24px"></i>
+                <i ng-hide="!query.name.first" class="mdi mdi-filter-remove mdi-24px filter-remove"
+                   ng-click="clearFilter('name.first')"></i>
+            </md-icon>
+            <md-input-container flex class="input-container-no-spacer">
+                <label>First Name</label>
+                <input ng-model="query.name.first" ng-change="onFilter()"/>
+            </md-input-container>
+            <md-icon>
+                <i ng-hide="query.name.last" class="mdi mdi-filter mdi-24px"></i>
+                <i ng-hide="!query.name.last" class="mdi mdi-filter-remove mdi-24px filter-remove"
+                   ng-click="clearFilter('name.last')"></i>
+            </md-icon>
+            <md-input-container flex class="input-container-no-spacer">
+                <label>Last Name</label>
+                <input ng-model="query.name.last" ng-change="onFilter()"/>
+            </md-input-container>
+            <md-icon>
+                <i ng-hide="query.class" class="mdi mdi-filter mdi-24px"></i>
+                <i ng-hide="!query.class" class="mdi mdi-filter-remove mdi-24px filter-remove"
+                   ng-click="clearFilter('class')"></i>
+            </md-icon>
+            <md-input-container flex class="input-container-no-spacer">
+                <label>Class</label>
+                <input name="class" ng-model="query.class" ng-change="onFilter()"
+                    ng-pattern='/^(\p{L}{1,2}-[1-9][0-9]?)$/'/>
+                <div ng-messages="studentFilterForm.class.$error" md-auto-hide="true"
+                     ng-if="studentFilterForm.class.$invalid && studentFilterForm.class.$touched">
+                    <p ng-message="pattern">Class must be formatted כיתה-מספר</p>
+                </div>
+            </md-input-container>
+        </form>
         <md-table-container>
             <table md-table md-row-select multiple ng-model="selected" md-progress="deferred">
                 <thead md-head md-order="query.order" md-on-reorder="onOrderChange" >

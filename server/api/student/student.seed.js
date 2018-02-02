@@ -8,7 +8,7 @@ export default {
             first: 'Eden',
             last: 'Bens'
         },
-        class: 'A1',
+        class: 'ט-1',
         school: schools[0],
         gender: 'female',
         avgGrade: 100
@@ -18,7 +18,7 @@ export default {
             first: 'Dana',
             last: 'Tsirulnik'
         },
-        class: 'B2',
+        class: 'יא-2',
         school: schools[0],
         gender: 'female',
         avgGrade: 100
@@ -28,7 +28,7 @@ export default {
             first: 'Noy',
             last: 'Y'
         },
-        class: 'B1',
+        class: 'י-1',
         school: schools[0],
         gender: 'female',
         avgGrade: 100
@@ -38,7 +38,7 @@ export default {
             first: 'Cristiano',
             last: 'Ronaldo'
         },
-        class: 'A1',
+        class: 'ט-1',
         school: schools[0],
         gender: 'male',
         avgGrade: 85

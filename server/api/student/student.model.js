@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import {createSeedModel} from 'mongoose-plugin-seed';
 import seed from './student.seed';
 import mongoosePaginate from 'mongoose-paginate';
+import XRegExp from 'xregexp';
 
 const Schema = mongoose.Schema;
 
@@ -18,7 +19,13 @@ const studentSchema = new Schema({
         last: String
     },
     class: {
-        type: String
+        type: String,
+        validate: {
+            validator: function(v) {
+                return new XRegExp('^(\\p{L}{1,2}-[1-9][0-9]?)$').test(v)
+            },
+            message: '{VALUE} is not a valid class'
+        }
     },
     school: {
         type: Schema.Types.ObjectId,
