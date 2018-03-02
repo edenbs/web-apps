@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $q, $mdDialog,$mdToast) {
+angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $q, $mdDialog,auth) {
     $scope.items = students;
     $scope.selected = [];
 
@@ -157,5 +157,4 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             });
 
         ev.stopPropagation();
-    }
 });
