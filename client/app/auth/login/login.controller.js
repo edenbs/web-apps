@@ -19,7 +19,6 @@ angular.module('classify').controller('LoginController', function($scope, $state
                 })
                 .catch(function (err) {
                     if (err.data.name === 'IncorrectUsernameError' || err.data.name === 'IncorrectPasswordError') {
-                        $scope.toastD = err.data.message;
                         $mdToast.showSimple(err.data.message).position('bottom');
                     }
                     $scope.errors.other = err.message;
