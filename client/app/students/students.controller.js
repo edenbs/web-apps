@@ -160,5 +160,4 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             });
 
         ev.stopPropagation();
-    }
 });
