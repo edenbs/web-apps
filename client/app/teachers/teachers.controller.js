@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('classify').controller('TeachersController', function($scope, $mdEditDialog, teachers, $teachers, $q, $mdDialog) {
+angular.module('classify').controller('TeachersController', function($scope, $mdEditDialog, teachers, $teachers, $q, $mdDialog,$mdToast) {
     $scope.items = teachers;
     $scope.selected = [];
 
@@ -27,8 +27,11 @@ angular.module('classify').controller('TeachersController', function($scope, $md
             return $teachers.delete({}, item).$promise;
         }))
         .then(function () {
-                $scope.getItems();
-            });
+            $scope.getItems();
+            var  deleteTch = 'Teacher deleted successfully';
+            $mdToast.showSimple(deleteTch).position('bottom left');
+
+        });
     };
 
     $scope.addItem = function (ev) {
@@ -42,21 +45,31 @@ angular.module('classify').controller('TeachersController', function($scope, $md
                 return $teachers.save(teacher).$promise;
             })
             .then(function () {
-                alert('teacher added successfully');
                 $scope.getItems();
+
+                var  addTch = 'Teacher  added successfully';
+                $mdToast.showSimple(addTch).position('bottom left');
+
             })
             .catch(function (err) {
-                alert('error adding teacher')
+                var  addTcherr = 'Error adding teacher ' + err.data.message;
+                $mdToast.showSimple(addTcherr).position('bottom left');
+
             });
     };
 
     $scope.changeRole = function (teacher) {
         return $teachers.update({}, teacher).$promise
             .then(function () {
-                alert('yay! saved!')
+                var  tchRole = 'Teacher role changed successfully';
+                $mdToast.showSimple(tchRole).position('bottom left');
+
+
             })
             .catch(function (err) {
-                alert(err);
+                var  tchRoleErr = 'Error changing teacher role  ' + err.data.message;
+                $mdToast.showSimple(tchRoleErr).position('bottom left');
+
             });
-    }
+    };
 });

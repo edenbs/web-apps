@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('classify').controller('ManagersController', function($scope, $mdEditDialog, managers, schools, $managers, $q, $mdDialog) {
+angular.module('classify').controller('ManagersController', function($scope, $mdEditDialog, managers, schools, $managers, $q, $mdDialog,$mdToast) {
     $scope.items = managers;
     $scope.schools = schools;
     $scope.selected = [];
@@ -29,6 +29,9 @@ angular.module('classify').controller('ManagersController', function($scope, $md
         }))
         .then(function () {
                 $scope.getItems();
+
+            var  deleteMeng = 'Manager deleted successfully';
+            $mdToast.showSimple(deleteMeng).position('bottom left');
             });
     };
 
@@ -43,24 +46,33 @@ angular.module('classify').controller('ManagersController', function($scope, $md
             }
         })
             .then(function (manager) {
-                return $managers.save(manager).$promise
+                return $managers.save(manager).$promise;
             })
             .then(function () {
-                alert('manager added successfully');
                 $scope.getItems();
+
+                var  addMng = 'Manager added successfully';
+                $mdToast.showSimple(addMng).position('bottom left');
+
             })
-            .catch(function () {
-                alert('error adding manager');
+            .catch(function (err) {
+                var  addMngErr = 'Error adding a school manager ' + err.data.message;
+                $mdToast.showSimple(addMngErr).position('bottom left');
+
             });
     };
 
     $scope.changeSchool = function (manager) {
         return $managers.update({}, manager).$promise
             .then(function () {
-                alert('yay! saved!')
+                var  updtMng = "Manager's school updated successfully";
+
+                $mdToast.showSimple(updtMng).position('bottom left');
             })
             .catch(function (err) {
-                alert(err);
+                var  updtMngErr = "Error updating a manager's school " + err.data.message;
+                $mdToast.showSimple(updtMngErr).position('bottom left');
+
             });
-    }
+    };
 });
