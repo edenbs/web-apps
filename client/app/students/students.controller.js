@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $q, $mdDialog) {
+angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $q, $mdDialog,$mdToast) {
     $scope.items = students;
     $scope.selected = [];
 
@@ -75,8 +75,11 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             return $students.delete({}, item).$promise;
         }))
             .then(function () {
-                alert('deleted successfully');
                 $scope.getItems();
+
+                var  deleteStd = 'Student deleted successfully';
+                $mdToast.showSimple(deleteStd).position('bottom left');
+
             });
     };
 
@@ -91,11 +94,16 @@ angular.module('classify').controller('StudentsController', function($scope, $md
                 return $students.save(student).$promise;
             })
             .then(function () {
-                alert('student added successfully');
                 $scope.getItems();
+
+                var  addStd = 'Student added successfully';
+                $mdToast.showSimple(addStd).position('bottom left');
+
             })
             .catch(function (err) {
-                alert('error adding student')
+                var  addStderr = 'Error adding student' + err.data.message;
+                $mdToast.showSimple(addStderr).position('bottom left');
+
             });
     };
 
@@ -115,24 +123,32 @@ angular.module('classify').controller('StudentsController', function($scope, $md
 
                 $scope.deferred
                     .then(function () {
-                        alert('student updated successfully');
+                        var  updtStd = 'Student updated successfully';
+                        $mdToast.showSimple(updtStd).position('bottom left');
+
                     })
                     .catch(function (err) {
-                        alert('error updating student');
+                        var  updtStderr = 'Error updating student '+ err.data.message;
+                        $mdToast.showSimple(updtStderr).position('bottom left');
+
                     });
 
                 return $scope.deferred;
             }
-        })
+        });
     };
 
     $scope.changeGender = function (student) {
         return $students.update({}, student).$promise
             .then(function () {
-                alert('yay! saved!')
+                var  updtStdGen = 'Student gender changed';
+                $mdToast.showSimple(updtStdGen).position('bottom left');
+
             })
             .catch(function (err) {
-                alert(err);
+                var  updtStdGenErr = 'Error changing student gender: ' + err.data.message;
+                $mdToast.showSimple(updtStdGenErr).position('bottom left');
+
             });
-    }
+    };
 });

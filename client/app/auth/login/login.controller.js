@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('classify').controller('LoginController', function($scope, $state, auth){
+angular.module('classify').controller('LoginController', function($scope, $state, auth,$mdToast){
     $scope.user = {};
     $scope.errors = {};
     $scope.submitted = false;
@@ -19,7 +19,8 @@ angular.module('classify').controller('LoginController', function($scope, $state
                 })
                 .catch(function (err) {
                     if (err.data.name === 'IncorrectUsernameError' || err.data.name === 'IncorrectPasswordError') {
-                        alert(err.data.message);
+                        $scope.toastD = err.data.message;
+                        $mdToast.showSimple(err.data.message).position('bottom');
                     }
                     $scope.errors.other = err.message;
                 });
