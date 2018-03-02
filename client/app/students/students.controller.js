@@ -76,10 +76,7 @@ angular.module('classify').controller('StudentsController', function($scope, $md
         }))
             .then(function () {
                 $scope.getItems();
-
-                var  deleteStd = 'Student deleted successfully';
-                $mdToast.showSimple(deleteStd).position('bottom left');
-
+                $mdToast.showSimple('Student deleted successfully').position('bottom left');
             });
     };
 
@@ -95,15 +92,10 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             })
             .then(function () {
                 $scope.getItems();
-
-                var  addStd = 'Student added successfully';
-                $mdToast.showSimple(addStd).position('bottom left');
-
+                $mdToast.showSimple('Student added successfully').position('bottom left');
             })
             .catch(function (err) {
-                var  addStderr = 'Error adding student' + err.data.message;
-                $mdToast.showSimple(addStderr).position('bottom left');
-
+                $mdToast.showSimple('Error adding student' + err.data.message).position('bottom left');
             });
     };
 
@@ -123,14 +115,11 @@ angular.module('classify').controller('StudentsController', function($scope, $md
 
                 $scope.deferred
                     .then(function () {
-                        var  updtStd = 'Student updated successfully';
-                        $mdToast.showSimple(updtStd).position('bottom left');
+                        $mdToast.showSimple('Student updated successfully').position('bottom left');
 
                     })
                     .catch(function (err) {
-                        var  updtStderr = 'Error updating student '+ err.data.message;
-                        $mdToast.showSimple(updtStderr).position('bottom left');
-
+                        $mdToast.showSimple('Error updating student ' + err.data.message).position('bottom left');
                     });
 
                 return $scope.deferred;
@@ -141,14 +130,11 @@ angular.module('classify').controller('StudentsController', function($scope, $md
     $scope.changeGender = function (student) {
         return $students.update({}, student).$promise
             .then(function () {
-                var  updtStdGen = 'Student gender changed';
-                $mdToast.showSimple(updtStdGen).position('bottom left');
+                $mdToast.showSimple('Student gender changed').position('bottom left');
 
             })
             .catch(function (err) {
-                var  updtStdGenErr = 'Error changing student gender: ' + err.data.message;
-                $mdToast.showSimple(updtStdGenErr).position('bottom left');
-
+                $mdToast.showSimple('Error changing student gender: ' + err.data.message).position('bottom left');
             });
     };
 });

@@ -5,7 +5,6 @@ angular.module('classify').controller('HomeController', function($scope) {
     // create a message to display in our view
     $scope.message = 'Everyone come and see how good I look!';
 
-
     var dataP = {lat: 31.969802, lng: 34.772795};
     var map = new google.maps.Map(document.getElementById('map'), {
         zoom: 4,
@@ -15,6 +14,4 @@ angular.module('classify').controller('HomeController', function($scope) {
         position: dataP,
         map: map
     });
-
-
 });

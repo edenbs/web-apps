@@ -28,9 +28,7 @@ angular.module('classify').controller('TeachersController', function($scope, $md
         }))
         .then(function () {
             $scope.getItems();
-            var  deleteTch = 'Teacher deleted successfully';
-            $mdToast.showSimple(deleteTch).position('bottom left');
-
+            $mdToast.showSimple('Teacher deleted successfully').position('bottom left');
         });
     };
 
@@ -46,30 +44,20 @@ angular.module('classify').controller('TeachersController', function($scope, $md
             })
             .then(function () {
                 $scope.getItems();
-
-                var  addTch = 'Teacher  added successfully';
-                $mdToast.showSimple(addTch).position('bottom left');
-
+                $mdToast.showSimple('Teacher  added successfully').position('bottom left');
             })
             .catch(function (err) {
-                var  addTcherr = 'Error adding teacher ' + err.data.message;
-                $mdToast.showSimple(addTcherr).position('bottom left');
-
+                $mdToast.showSimple('Error adding teacher ' + err.data.message).position('bottom left');
             });
     };
 
     $scope.changeRole = function (teacher) {
         return $teachers.update({}, teacher).$promise
             .then(function () {
-                var  tchRole = 'Teacher role changed successfully';
-                $mdToast.showSimple(tchRole).position('bottom left');
-
-
+                $mdToast.showSimple('Teacher role changed successfully').position('bottom left');
             })
             .catch(function (err) {
-                var  tchRoleErr = 'Error changing teacher role  ' + err.data.message;
-                $mdToast.showSimple(tchRoleErr).position('bottom left');
-
+                $mdToast.showSimple('Error changing teacher role ' + err.data.message).position('bottom left');
             });
     };
 });

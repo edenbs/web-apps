@@ -28,11 +28,9 @@ angular.module('classify').controller('ManagersController', function($scope, $md
             return $managers.delete({}, item).$promise;
         }))
         .then(function () {
-                $scope.getItems();
-
-            var  deleteMeng = 'Manager deleted successfully';
-            $mdToast.showSimple(deleteMeng).position('bottom left');
-            });
+            $scope.getItems();
+            $mdToast.showSimple('Manager deleted successfully').position('bottom left');
+        });
     };
 
     $scope.addItem = function (ev) {
@@ -50,29 +48,21 @@ angular.module('classify').controller('ManagersController', function($scope, $md
             })
             .then(function () {
                 $scope.getItems();
-
-                var  addMng = 'Manager added successfully';
-                $mdToast.showSimple(addMng).position('bottom left');
-
+                $mdToast.showSimple('Manager added successfully').position('bottom left');
             })
             .catch(function (err) {
-                var  addMngErr = 'Error adding a school manager ' + err.data.message;
-                $mdToast.showSimple(addMngErr).position('bottom left');
-
+                $mdToast.showSimple('Error adding a school manager ' + err.data.message).position('bottom left');
             });
     };
 
     $scope.changeSchool = function (manager) {
         return $managers.update({}, manager).$promise
             .then(function () {
-                var  updtMng = "Manager's school updated successfully";
-
-                $mdToast.showSimple(updtMng).position('bottom left');
+                $mdToast.showSimple("Manager's school updated successfully").position('bottom left');
             })
             .catch(function (err) {
                 var  updtMngErr = "Error updating a manager's school " + err.data.message;
                 $mdToast.showSimple(updtMngErr).position('bottom left');
-
             });
     };
 });
