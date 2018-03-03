@@ -29,7 +29,7 @@ angular.module('classify').controller('ManagersController', function($scope, $md
         }))
         .then(function () {
             $scope.getItems();
-            $mdToast.showSimple('Manager deleted successfully').position('bottom left');
+            $mdToast.showSimple('Manager deleted successfully');
         });
     };
 
@@ -48,21 +48,20 @@ angular.module('classify').controller('ManagersController', function($scope, $md
             })
             .then(function () {
                 $scope.getItems();
-                $mdToast.showSimple('Manager added successfully').position('bottom left');
+                $mdToast.showSimple('Manager added successfully');
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error adding a school manager ' + err.data.message).position('bottom left');
+                $mdToast.showSimple('Error adding a school manager');
             });
     };
 
     $scope.changeSchool = function (manager) {
         return $managers.update({}, manager).$promise
             .then(function () {
-                $mdToast.showSimple("Manager's school updated successfully").position('bottom left');
+                $mdToast.showSimple("Manager's school updated successfully");
             })
             .catch(function (err) {
-                var  updtMngErr = "Error updating a manager's school " + err.data.message;
-                $mdToast.showSimple(updtMngErr).position('bottom left');
+                $mdToast.showSimple("Error updating a manager's school");
             });
     };
 });

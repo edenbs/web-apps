@@ -76,7 +76,7 @@ angular.module('classify').controller('StudentsController', function($scope, $md
         }))
             .then(function () {
                 $scope.getItems();
-                $mdToast.showSimple('Student deleted successfully').position('bottom left');
+                $mdToast.showSimple('Student deleted successfully');
             });
     };
 
@@ -92,10 +92,10 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             })
             .then(function () {
                 $scope.getItems();
-                $mdToast.showSimple('Student added successfully').position('bottom left');
+                $mdToast.showSimple('Student added successfully');
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error adding student' + err.data.message).position('bottom left');
+                $mdToast.showSimple('Error adding student');
             });
     };
 
@@ -115,11 +115,11 @@ angular.module('classify').controller('StudentsController', function($scope, $md
 
                 $scope.deferred
                     .then(function () {
-                        $mdToast.showSimple('Student updated successfully').position('bottom left');
+                        $mdToast.showSimple('Student updated successfully');
 
                     })
                     .catch(function (err) {
-                        $mdToast.showSimple('Error updating student ' + err.data.message).position('bottom left');
+                        $mdToast.showSimple('Error updating student');
                     });
 
                 return $scope.deferred;
@@ -130,11 +130,11 @@ angular.module('classify').controller('StudentsController', function($scope, $md
     $scope.changeGender = function (student) {
         return $students.update(student).$promise
             .then(function () {
-                $mdToast.showSimple('Student gender changed').position('bottom left');
+                $mdToast.showSimple('Student gender changed');
 
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error changing student gender: ' + err.data.message).position('bottom left');
+                $mdToast.showSimple('Error changing student gender');
             });
     };
 
@@ -157,4 +157,5 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             });
 
         ev.stopPropagation();
+    }
 });

@@ -28,7 +28,7 @@ angular.module('classify').controller('TeachersController', function($scope, $md
         }))
         .then(function () {
             $scope.getItems();
-            $mdToast.showSimple('Teacher deleted successfully').position('bottom left');
+            $mdToast.showSimple('Teacher deleted successfully');
         });
     };
 
@@ -44,20 +44,20 @@ angular.module('classify').controller('TeachersController', function($scope, $md
             })
             .then(function () {
                 $scope.getItems();
-                $mdToast.showSimple('Teacher  added successfully').position('bottom left');
+                $mdToast.showSimple('Teacher  added successfully');
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error adding teacher ' + err.data.message).position('bottom left');
+                $mdToast.showSimple('Error adding teacher ' + err.data.message);
             });
     };
 
     $scope.changeRole = function (teacher) {
         return $teachers.update({}, teacher).$promise
             .then(function () {
-                $mdToast.showSimple('Teacher role changed successfully').position('bottom left');
+                $mdToast.showSimple('Teacher role changed successfully');
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error changing teacher role ' + err.data.message).position('bottom left');
+                $mdToast.showSimple('Error changing teacher role ' + err.data.message);
             });
     };
 });
