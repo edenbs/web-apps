@@ -1,0 +1,16 @@
+.modal-height {
+    max-height: 95%;
+    width:150%;
+}
+
+.modal-overflow {
+    overflow: hidden;
+}
+
+.grades-datepicker {
+    padding: 0;
+}
+
+.md-datepicker-input-container {
+    width: 100%;
+}

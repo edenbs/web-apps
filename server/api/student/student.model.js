@@ -3,6 +3,9 @@ import {createSeedModel} from 'mongoose-plugin-seed';
 import seed from './student.seed';
 import mongoosePaginate from 'mongoose-paginate';
 import XRegExp from 'xregexp';
+import Grade from '../grade/grade.model.js';
+import _ from 'lodash';
+import idvalidator from 'mongoose-id-validator';
 
 const Schema = mongoose.Schema;
 
@@ -41,10 +44,30 @@ const studentSchema = new Schema({
     avgGrade: {
         type: Number,
         min: 0,
-        max: 100
-    }
+        max: 100,
+        default: 0
+    },
+    grades: [{type: Schema.Types.ObjectId, ref: 'Grade'}]
 });
 
+studentSchema.plugin(idvalidator);
 studentSchema.plugin(mongoosePaginate);
+
+studentSchema.pre('save', function(next) {
+    this.calcAvgGrade();
+    next();
+});
+
+studentSchema.methods.calcAvgGrade = function () {
+    if (this.grades && this.grades.length) {
+        this.avgGrade = _.meanBy(this.grades, grade => grade.score);
+    }
+};
+
+studentSchema.methods.updateAvgGrade = function () {
+    this.calcAvgGrade();
+
+    return this.save();
+};
 
 export default createSeedModel('Student', studentSchema, seed);

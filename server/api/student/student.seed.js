@@ -1,8 +1,11 @@
 import School from '../school/school.model.js';
+import User from '../user/user.model.js';
+import Grade from '../grade/grade.model.js';
+import _ from 'lodash';
 
 export default {
-    dependencies: [School],
-    seed: (schools) => [{
+    dependencies: [School, User, Grade],
+    seed: (schools, users, grades) => [{
         id: '313562894',
         name: {
             first: 'Eden',
@@ -11,7 +14,7 @@ export default {
         class: 'ט-1',
         school: schools[0],
         gender: 'female',
-        avgGrade: 100
+        grades: _.times(9).map(i => grades[i])
     }, {
         id: '204773584',
         name: {
@@ -21,7 +24,7 @@ export default {
         class: 'יא-2',
         school: schools[0],
         gender: 'female',
-        avgGrade: 100
+        grade: []
     },{
         id: '205634645',
         name: {
@@ -31,7 +34,7 @@ export default {
         class: 'י-1',
         school: schools[0],
         gender: 'female',
-        avgGrade: 100
+        grades: []
     }, {
         id: '123456789',
         name: {
@@ -41,6 +44,6 @@ export default {
         class: 'ט-1',
         school: schools[0],
         gender: 'male',
-        avgGrade: 85
+        grades: []
     }]
 }

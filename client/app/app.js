@@ -11,13 +11,14 @@ angular.module('classify', [
     'ngCookies',
     'angularXRegExp'
     ])
-    .config(function($httpProvider, $stateProvider, $locationProvider, $urlRouterProvider, $mdThemingProvider) {
+    .config(function($httpProvider, $stateProvider, $locationProvider, $urlRouterProvider, $mdThemingProvider, $mdAriaProvider) {
         $urlRouterProvider
             .otherwise('/');
 
         $locationProvider.html5Mode(true);
         $httpProvider.interceptors.push('authInterceptor');
 
+        $mdAriaProvider.disableWarnings();
         $mdThemingProvider.theme('default')
             .primaryPalette('amber')
             .accentPalette('deep-orange');

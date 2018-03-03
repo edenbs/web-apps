@@ -128,7 +128,7 @@ angular.module('classify').controller('StudentsController', function($scope, $md
     };
 
     $scope.changeGender = function (student) {
-        return $students.update({}, student).$promise
+        return $students.update(student).$promise
             .then(function () {
                 $mdToast.showSimple('Student gender changed').position('bottom left');
 
@@ -137,4 +137,24 @@ angular.module('classify').controller('StudentsController', function($scope, $md
                 $mdToast.showSimple('Error changing student gender: ' + err.data.message).position('bottom left');
             });
     };
+
+    $scope.editGrades = function (ev, item) {
+        $mdDialog.show({
+            controller: 'EditGrades',
+            templateUrl: 'app/students/edit-grades/edit-grades.html',
+            targetEvent: ev,
+            locals: {
+                student: item
+            },
+            resolve: {
+                grades: function () {
+                    return $students.grades({id: item._id}).$promise;
+                }
+            }
+        })
+            .then(function (student) {
+                $scope.getItems();
+            });
+
+        ev.stopPropagation();
 });

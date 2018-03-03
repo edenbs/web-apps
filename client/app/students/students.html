@@ -74,7 +74,13 @@
                             </md-select>
                         </md-input-container>
                     </td>
-                    <td md-cell ng-click="edit($event, item, 'avgGrade')">{{ item.avgGrade }}</td>
+                    <td md-cell>{{ item.avgGrade }}</td>
+                    <td md-cell>
+                        <md-button ng-click="editGrades($event, item)" class="md-icon-button">
+                            <md-tooltip>Edit Grades</md-tooltip>
+                            <i class="mdi mdi-format-list-bulleted mdi-24px"></i>
+                        </md-button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

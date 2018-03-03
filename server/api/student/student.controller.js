@@ -1,4 +1,5 @@
 import Student from './student.model.js';
+import Grade from '../grade/grade.model.js';
 import createError from 'http-errors';
 import _ from 'lodash';
 
@@ -53,4 +54,70 @@ export function remove (req) {
         .then(student => errorIfNotSchool(student, req.user.school))
         .then(student => student.remove())
         .then(_.noop);
+}
+
+export function grades(req) {
+    return Student.findById(req.params.id)
+        .populate('grades')
+        .then(errorIfEmpty)
+        .then(student => student.grades);
+}
+
+export function addGrade (req) {
+    const data = _.pick(req.body, ['subject', 'score', 'created']);
+
+    data.teacher = req.user;
+
+    /*return Student.findById(req.params.id)
+        .then(errorIfEmpty)
+        .then(student => errorIfNotSchool(student, req.user.school))
+        .then(() => new Grade(data).save())
+        .then(errorIfEmpty)
+        .then(grade => Student.update({_id: req.params.id}, {$push: {grades: grade._id}}))
+        .then(_.noop);*/
+
+    return Student.findById(req.params.id)
+        .populate('grades')
+        .then(errorIfEmpty)
+        .then(student => errorIfNotSchool(student, req.user.school))
+        .then(student => {
+            return new Grade(data).save()
+                .then(errorIfEmpty)
+                .then(grade => {
+                    student.grades.push(grade);
+                    return student.save()
+                })
+                .then(_.noop);
+        })
+}
+
+export function updateGrade(req) {
+    var data = _.pick(req.body, ['score']);
+
+    return Student.findById(req.params.id)
+        .then(errorIfEmpty)
+        .then(student => errorIfNotSchool(student, req.user.school))
+        .then(student => {
+            return Grade.findById(req.params.grade)
+                .then(errorIfEmpty)
+                .then(grade => grade.set(data).save())
+                .then(() => student.populate('grades').execPopulate())
+                .then(() => student.updateAvgGrade())
+                .then(_.noop);
+        })
+}
+
+export function removeGrade (req) {
+    return Student.findById(req.params.id)
+        .populate('grades')
+        .then(errorIfEmpty)
+        .then(student => errorIfNotSchool(student, req.user.school))
+        .then(student => {
+            _.remove(student.grades, grade => grade._id.toString() === req.params.grade);
+            return student.save();
+        })
+        .then(() => Grade.findById(req.params.grade))
+        .then(errorIfEmpty)
+        .then(grade => grade.remove())
+        .then(_.noop)
 }
