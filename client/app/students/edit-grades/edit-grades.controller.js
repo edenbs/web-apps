@@ -1,15 +1,28 @@
 'use strict';
 
 angular.module('classify')
-    .controller('EditGrades', function ($scope, $mdDialog, $students, grades, student, $mdToast) {
+    .controller('EditGrades', function ($scope, $mdDialog, $students, $users, grades, student, subjects, $mdToast) {
         $scope.student = student;
         $scope.grades = grades;
+        $scope.mySubjects = subjects;
+        $scope.newGrade = {};
 
         var refreshGrades = function () {
             $students.grades({id: student._id}).$promise
                 .then(function (grades) {
                     $scope.grades = grades;
                 })
+        };
+
+        var refreshMySubjects = function () {
+            $users.mySubjects({limit: 1}).$promise
+                .then(function (subjects) {
+                    $scope.mySubjects = subjects;
+                })
+        };
+
+        $scope.setSubject = function (subject) {
+            $scope.newGrade.subject = subject;
         };
 
         $scope.update = function (grade) {
@@ -27,6 +40,7 @@ angular.module('classify')
             $students.deleteGrade({id: student._id, grade: grade._id}).$promise
                 .then(function () {
                     refreshGrades();
+                    refreshMySubjects();
                     $mdToast.showSimple('Grade was removed successfully');
                 })
                 .catch(function () {
@@ -38,6 +52,7 @@ angular.module('classify')
             $students.addGrade({id: student._id}, $scope.newGrade).$promise
                 .then(function() {
                     refreshGrades();
+                    refreshMySubjects();
                     $scope.newGrade = {};
                     $mdToast.showSimple('Grade was added successfully');
                 })

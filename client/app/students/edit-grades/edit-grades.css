@@ -14,3 +14,10 @@
 .md-datepicker-input-container {
     width: 100%;
 }
+
+.hint-subject {
+    cursor: pointer;
+    color: lightgrey;
+    font-size: smaller;
+    text-decoration: underline;
+}

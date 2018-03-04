@@ -15,9 +15,6 @@
             <div ng-repeat="grade in grades" flex layout="row" layout-margin>
                 <ng-form name="updateForm" layout="row" flex>
                     <span flex="30">{{grade.created | date:'dd/MM/yyyy'}}</span>
-                    <!--<md-input-container flex="30">
-                        <input ng-model="grade.subject" />
-                    </md-input-container>-->
                     <span flex="30">{{grade.subject}}</span>
                     <md-input-container flex="30">
                         <input name="score" ng-model="grade.score" required />
@@ -52,6 +49,7 @@
                      ng-if="newGradeForm.subject.$invalid && newGradeForm.subject.$touched">
                     <p ng-message="required">Subject is required</p>
                 </div>
+                <span class="hint hint-subject" ng-click="setSubject(mySubjects[0])">(Your most graded subject is {{mySubjects[0]}})</span>
             </md-input-container>
             <md-input-container flex="30">
                 <input name="score" ng-model="newGrade.score" placeholder="Score" ng-pattern="/^([0-9]|[1-8][0-9]|9[0-9]|100)$/" required md-no-asterisk/>

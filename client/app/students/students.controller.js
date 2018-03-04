@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $q, $mdDialog,$mdToast) {
+angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $users, $q, $mdDialog,$mdToast) {
     $scope.items = students;
     $scope.selected = [];
 
@@ -149,6 +149,9 @@ angular.module('classify').controller('StudentsController', function($scope, $md
             resolve: {
                 grades: function () {
                     return $students.grades({id: item._id}).$promise;
+                },
+                subjects: function () {
+                    return $users.mySubjects({limit: 1}).$promise;
                 }
             }
         })
