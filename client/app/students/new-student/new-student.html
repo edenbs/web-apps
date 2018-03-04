@@ -4,31 +4,33 @@
             <span class="md-headline">Add New Student</span>
         </div>
     </md-toolbar>
-    <md-dialog-contnet layout="column" class="md-dialog-content">
-        <md-input-container>
-            <label>ID</label>
-            <input ng-model="student.id" />
-        </md-input-container>
-        <md-input-container>
-            <label>First Name</label>
-            <input ng-model="student.name.first" />
-        </md-input-container>
-        <md-input-container>
-            <label>Last Name</label>
-            <input ng-model="student.name.last" />
-        </md-input-container>
-        <md-input-container>
-            <md-select ng-model="student.gender" class="md-no-underline">
-                <md-option value="female">Female</md-option>
-                <md-option value="male">Male</md-option>
-            </md-select>
-        </md-input-container>
-        <md-input-container>
-            <label>Class</label>
-            <input ng-model="student.class" />
-        </md-input-container>
-    </md-dialog-contnet>
-    <md-dialog-actions>
-        <md-button ng-click="save()" class="md-primary">Save</md-button>
-    </md-dialog-actions>
+    <form name="addStudentForm">
+        <md-dialog-contnet layout="column" class="md-dialog-content">
+            <md-input-container>
+                <label>ID</label>
+                <input name="ID" ng-model="student.id" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>First Name</label>
+                <input name="firstName" ng-model="student.name.first" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>Last Name</label>
+                <input name="lastName" ng-model="student.name.last"  required/>
+            </md-input-container>
+            <md-input-container>
+                <md-select ng-model="student.gender" class="md-no-underline">
+                    <md-option value="female">Female</md-option>
+                    <md-option value="male">Male</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container>
+                <label>Class</label>
+                <input name="class" ng-model="student.class" required/>
+            </md-input-container>
+        </md-dialog-contnet>
+        <md-dialog-actions>
+            <md-button ng-click="save()" class="md-primary" ng-disabled="addStudentForm.$invalid">Save</md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>

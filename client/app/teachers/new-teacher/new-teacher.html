@@ -4,27 +4,29 @@
             <span class="md-headline">Create New Teacher</span>
         </div>
     </md-toolbar>
-    <md-dialog-contnet layout="column" class="md-dialog-content">
-        <md-input-container>
-            <label>ID</label>
-            <input ng-model="teacher.id" />
-        </md-input-container>
-        <md-input-container>
-            <label>First Name</label>
-            <input ng-model="teacher.name.first" />
-        </md-input-container>
-        <md-input-container>
-            <label>Last Name</label>
-            <input ng-model="teacher.name.last" />
-        </md-input-container>
-        <md-input-container>
-            <md-select ng-model="teacher.role" class="md-no-underline">
-                <md-option value="viewer">Viewer</md-option>
-                <md-option value="editor">Editor</md-option>
-            </md-select>
-        </md-input-container>
-    </md-dialog-contnet>
-    <md-dialog-actions>
-        <md-button ng-click="save()" class="md-primary">Save</md-button>
-    </md-dialog-actions>
+    <form name="addTeacherForm">
+        <md-dialog-contnet layout="column" class="md-dialog-content">
+            <md-input-container>
+                <label>ID</label>
+                <input name="id" ng-model="teacher.id" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>First Name</label>
+                <input name="firstName" ng-model="teacher.name.first" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>Last Name</label>
+                <input name="lastName" ng-model="teacher.name.last" required/>
+            </md-input-container>
+            <md-input-container>
+                <md-select ng-model="teacher.role" class="md-no-underline">
+                    <md-option value="viewer">Viewer</md-option>
+                    <md-option value="editor">Editor</md-option>
+                </md-select>
+            </md-input-container>
+        </md-dialog-contnet>
+        <md-dialog-actions>
+            <md-button ng-click="save()" class="md-primary" ng-disabled="addTeacherForm.$invalid">Save</md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>

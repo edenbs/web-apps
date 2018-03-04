@@ -47,7 +47,7 @@ angular.module('classify').controller('TeachersController', function($scope, $md
                 $mdToast.showSimple('Teacher  added successfully');
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error adding teacher ' + err.data.message);
+                $mdToast.showSimple('Error adding teacher');
             });
     };
 
@@ -57,7 +57,7 @@ angular.module('classify').controller('TeachersController', function($scope, $md
                 $mdToast.showSimple('Teacher role changed successfully');
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error changing teacher role ' + err.data.message);
+                $mdToast.showSimple('Error changing teacher role');
             });
     };
 });

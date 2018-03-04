@@ -4,26 +4,28 @@
             <span class="md-headline">Create New Manager</span>
         </div>
     </md-toolbar>
-    <md-dialog-contnet layout="column" class="md-dialog-content">
-        <md-input-container>
-            <label>ID</label>
-            <input ng-model="manager.id" />
-        </md-input-container>
-        <md-input-container>
-            <label>First Name</label>
-            <input ng-model="manager.name.first" />
-        </md-input-container>
-        <md-input-container>
-            <label>Last Name</label>
-            <input ng-model="manager.name.last" />
-        </md-input-container>
-        <md-input-container>
-            <md-select ng-model="manager.school" class="md-no-underline">
-                <md-option ng-repeat="school in schools" ng-value="school._id">{{school.name}}</md-option>
-            </md-select>
-        </md-input-container>
-    </md-dialog-contnet>
-    <md-dialog-actions>
-        <md-button ng-click="save()" class="md-primary">Save</md-button>
-    </md-dialog-actions>
+    <form name="addManagerForm">
+        <md-dialog-contnet layout="column" class="md-dialog-content">
+            <md-input-container>
+                <label>ID</label>
+                <input name="id" ng-model="manager.id" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>First Name</label>
+                <input name="firstName" ng-model="manager.name.first" required/>
+            </md-input-container>
+            <md-input-container>
+                <label>Last Name</label>
+                <input name="lastName" ng-model="manager.name.last" required/>
+            </md-input-container>
+            <md-input-container>
+                <md-select ng-model="manager.school" class="md-no-underline">
+                    <md-option ng-repeat="school in schools" ng-value="school._id">{{school.name}}</md-option>
+                </md-select>
+            </md-input-container>
+        </md-dialog-contnet>
+        <md-dialog-actions>
+            <md-button ng-click="save()" class="md-primary" ng-disabled="addManagerForm.$invalid">Save</md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>
