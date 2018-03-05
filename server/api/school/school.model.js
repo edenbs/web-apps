@@ -9,7 +9,11 @@ const schoolSchema = new Schema({
        type: String,
        required: true,
        unique: true
-   }
+   },
+    location: {
+        lat: Number,
+        lng: Number
+    }
 });
 
 export default createSeedModel('School', schoolSchema, seed);

@@ -14,6 +14,36 @@
                 </md-button>
             </div>
         </md-toolbar>
+        <form name="teacherFilterForm" layout="row" layout-margin>
+            <md-icon>
+                <i ng-hide="query.filterId" class="mdi mdi-filter mdi-24px"></i>
+                <i ng-hide="!query.filterId" class="mdi mdi-filter-remove mdi-24px filter-remove"
+                   ng-click="clearFilter('filterId')"></i>
+            </md-icon>
+            <md-input-container flex class="input-container-no-spacer">
+                <label>Id</label>
+                <input name="id" ng-model="query.filterId" ng-change="onFilter()"/>
+            </md-input-container>
+            <md-icon>
+                <i ng-hide="query.name.first" class="mdi mdi-filter mdi-24px"></i>
+                <i ng-hide="!query.name.first" class="mdi mdi-filter-remove mdi-24px filter-remove"
+                   ng-click="clearFilter('name.first')"></i>
+            </md-icon>
+            <md-input-container flex class="input-container-no-spacer">
+                <label>First Name</label>
+                <input ng-model="query.name.first" ng-change="onFilter()"/>
+            </md-input-container>
+            <md-icon>
+                <i ng-hide="query.name.last" class="mdi mdi-filter mdi-24px"></i>
+                <i ng-hide="!query.name.last" class="mdi mdi-filter-remove mdi-24px filter-remove"
+                   ng-click="clearFilter('name.last')"></i>
+            </md-icon>
+            <md-input-container flex class="input-container-no-spacer">
+                <label>Last Name</label>
+                <input ng-model="query.name.last" ng-change="onFilter()"/>
+            </md-input-container>
+
+        </form>
         <md-table-container>
             <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
                 <thead md-head md-order="query.order" md-on-reorder="onOrderChange" >

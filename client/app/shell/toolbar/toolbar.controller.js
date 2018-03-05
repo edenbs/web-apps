@@ -32,7 +32,6 @@ angular.module('classify')
                 xfbml: true,
                 version: 'v2.12'
             });
-            console.log('I GOT CALLED');
         };
 
         $scope.share = function () {

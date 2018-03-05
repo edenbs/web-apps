@@ -1,20 +1,22 @@
 'use strict';
 
-angular.module('classify').controller('HomeController', function($scope) {
-
-    // create a message to display in our view
-    $scope.message = 'Everyone come and see how good I look!';
-
+angular.module('classify').controller('HomeController', function($scope, schools) {
     function initMap() {
         try{
             var dataP = {lat: 31.969802, lng: 34.772795};
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
+                zoom: 7,
                 center: dataP
             });
-            var marker = new google.maps.Marker({
-                position: dataP,
-                map: map
+
+            var markers =_.map(schools, school => {
+                return new google.maps.Marker({
+                    position: {
+                        lat: school.location.lat,
+                        lng: school.location.lng
+                    },
+                    map: map
+                })
             });
         } catch (err){
         }

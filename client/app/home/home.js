@@ -5,7 +5,12 @@ angular.module('classify')
         $stateProvider.state('shell.home',{
                 url: '/',
                 templateUrl: 'app/home/home.html',
-                controller: 'HomeController'
+                controller: 'HomeController',
+                resolve: {
+                    schools: function($schools) {
+                        return $schools.get().$promise;
+                    }
+                }
             }
         )
     });

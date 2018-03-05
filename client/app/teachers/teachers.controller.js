@@ -9,6 +9,15 @@ angular.module('classify').controller('TeachersController', function($scope, $md
         limit: 5,
         page: 1
     };
+    $scope.onFilter = function () {
+        $scope.query.page = 1;
+        return $scope.getItems();
+    };
+
+    $scope.clearFilter = function (name) {
+        _.set($scope.query, name, '');
+        return $scope.getItems();
+    };
 
     $scope.getItems = function () {
         $scope.promise = $teachers.paginate($scope.query).$promise.then(function (items) {
