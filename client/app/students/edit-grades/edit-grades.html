@@ -5,37 +5,37 @@
         </div>
     </md-toolbar>
     <md-dialog-content layout="column" class="modal-overflow">
-        <md-content layout="column" md-colors="{background: 'default-grey-A100'}" flex="60">
-            <div flex layout="row" layout-margin>
+        <md-content layout="column" layout-margin md-colors="{background: 'default-grey-A100'}" flex="60">
+            <div flex layout="row">
                 <span flex="30">Date</span>
                 <span flex="30">Subject</span>
                 <span flex="30">Grade</span>
-                <div flex="10"></div>
+                <div flex="5"></div>
+                <div flex="5"></div>
             </div>
-            <div ng-repeat="grade in grades" flex layout="row" layout-margin>
-                <ng-form name="updateForm" layout="row" flex>
-                    <span flex="30">{{grade.created | date:'dd/MM/yyyy'}}</span>
-                    <span flex="30">{{grade.subject}}</span>
-                    <md-input-container flex="30">
-                        <input name="score" ng-model="grade.score" required />
-                        <div ng-messages="updateForm.score.$error" md-auto-hide="true"
-                             ng-if="updateForm.score.$invalid && updateForm.score.$touched">
-                            <p ng-message="required">Score is required</p>
-                            <p ng-message="pattern">Score must be between 0 to 100</p>
-                        </div>
-                    </md-input-container>
-                    <md-button ng-click="update(grade)" class="md-icon-button" flex="5" ng-disabled="updateForm.$invalid || !updateForm.$dirty">
-                        <md-tooltip>Save</md-tooltip>
-                        <i class="mdi mdi-content-save mdi-24px"></i>
-                    </md-button>
-                    <md-button ng-click="delete(grade)" class="md-icon-button" flex="5">
-                        <md-tooltip>Delete</md-tooltip>
-                        <i class="mdi mdi-delete mdi-24px"></i>
-                    </md-button>
-                </ng-form>
-            </div>
+            <hr>
+            <ng-form ng-repeat="grade in grades" name="updateForm" layout="row" layout-align="center center" flex>
+                <span flex="30">{{grade.created | date:'dd/MM/yyyy'}}</span>
+                <span flex="30">{{grade.subject}}</span>
+                <md-input-container flex="30" class="give-margin">
+                    <input name="score" ng-model="grade.score" required />
+                    <div ng-messages="updateForm.score.$error" md-auto-hide="true"
+                         ng-if="updateForm.score.$invalid && updateForm.score.$touched">
+                        <p ng-message="required">Score is required</p>
+                        <p ng-message="pattern">Score must be between 0 to 100</p>
+                    </div>
+                </md-input-container>
+                <md-button ng-click="update(grade)" class="md-icon-button no-margin" flex="5" ng-disabled="updateForm.$invalid || !updateForm.$dirty">
+                    <md-tooltip>Save</md-tooltip>
+                    <i class="mdi mdi-content-save mdi-24px"></i>
+                </md-button>
+                <md-button ng-click="delete(grade)" class="md-icon-button no-margin" flex="5">
+                    <md-tooltip>Delete</md-tooltip>
+                    <i class="mdi mdi-delete mdi-24px"></i>
+                </md-button>
+            </ng-form>
         </md-content>
-        <form name="newGradeForm" layout="row" flex="40" layout-margin>
+        <form name="newGradeForm" layout="row" flex="40" layout-margin class="add-grade">
             <md-input-container  flex="30">
                 <md-datepicker name="created" ng-model="newGrade.created" class="grades-datepicker" md-hide-icons="calendar" placeholder="Date Of Test" required md-no-asterisk></md-datepicker>
                 <div ng-messages="newGradeForm.created.$error" md-auto-hide="true"

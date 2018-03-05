@@ -15,9 +15,21 @@
     width: 100%;
 }
 
+.give-margin {
+    margin-top: 40px;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.add-grade {
+    min-height: 60px;
+}
+
 .hint-subject {
     cursor: pointer;
     color: lightgrey;
-    font-size: smaller;
+    font-size: x-small;
     text-decoration: underline;
 }
