@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $q, $mdDialog,$mdToast) {
+angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students,$users, $q, $mdDialog,$mdToast,auth) {
     $scope.items = students;
     $scope.selected = [];
     $scope.query = {
@@ -137,6 +137,7 @@ angular.module('classify').controller('StudentsController', function($scope, $md
     };
 
     $scope.editGrades = function (ev, item) {
+
         $mdDialog.show({controller: 'EditGrades',
             templateUrl: 'app/students/edit-grades/edit-grades.html',
             targetEvent: ev,
@@ -146,7 +147,10 @@ angular.module('classify').controller('StudentsController', function($scope, $md
                 grades: function () {return $students.grades({id: item._id}).$promise;
                 },
                 subjects: function () {
-                    return $users.mySubjects({limit: 1}).$promise;
+                    if($scope.isEditor()) {
+                        return $users.mySubjects({limit: 1}).$promise;
+                    }
+                    else {return [];}
                 }
             }
         }).then(function (student) {

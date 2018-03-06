@@ -18,24 +18,24 @@
                 <span flex="30">{{grade.created | date:'dd/MM/yyyy'}}</span>
                 <span flex="30">{{grade.subject}}</span>
                 <md-input-container flex="30" class="give-margin">
-                    <input name="score" ng-model="grade.score" required />
+                    <input ng-disabled="!isEditor()"  name="score" ng-model="grade.score" required />
                     <div ng-messages="updateForm.score.$error" md-auto-hide="true"
                          ng-if="updateForm.score.$invalid && updateForm.score.$touched">
                         <p ng-message="required">Score is required</p>
                         <p ng-message="pattern">Score must be between 0 to 100</p>
                     </div>
                 </md-input-container>
-                <md-button ng-click="update(grade)" class="md-icon-button no-margin" flex="5" ng-disabled="updateForm.$invalid || !updateForm.$dirty">
+                <md-button ng-if="isEditor()" ng-click="update(grade)" class="md-icon-button no-margin" flex="5" ng-disabled="updateForm.$invalid || !updateForm.$dirty">
                     <md-tooltip>Save</md-tooltip>
                     <i class="mdi mdi-content-save mdi-24px"></i>
                 </md-button>
-                <md-button ng-click="delete(grade)" class="md-icon-button no-margin" flex="5">
+                <md-button ng-if="isEditor()" ng-click="delete(grade)" class="md-icon-button no-margin" flex="5">
                     <md-tooltip>Delete</md-tooltip>
                     <i class="mdi mdi-delete mdi-24px"></i>
                 </md-button>
             </ng-form>
         </md-content>
-        <form name="newGradeForm" layout="row" flex="40" layout-margin class="add-grade">
+        <form ng-if="isEditor()" name="newGradeForm" layout="row" flex="40" layout-margin class="add-grade">
             <md-input-container  flex="30">
                 <md-datepicker name="created" ng-model="newGrade.created" class="grades-datepicker" md-hide-icons="calendar" placeholder="Date Of Test" required md-no-asterisk></md-datepicker>
                 <div ng-messages="newGradeForm.created.$error" md-auto-hide="true"
@@ -59,7 +59,7 @@
                     <p ng-message="pattern">Score must be between 0 to 100</p>
                 </div>
             </md-input-container>
-            <md-button ng-click="add()" class="md-icon-button" flex="5" ng-disabled="newGradeForm.$invalid">
+            <md-button ng-if="isEditor()" ng-click="add()" class="md-icon-button" flex="5" ng-disabled="newGradeForm.$invalid">
                 <md-tooltip>Add</md-tooltip>
                 <i class="mdi mdi-content-save mdi-24px"></i>
             </md-button>
