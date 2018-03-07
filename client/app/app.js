@@ -9,7 +9,8 @@ angular.module('classify', [
     'fixed.table.header',
     'ngResource',
     'ngCookies',
-    'angularXRegExp'
+    'angularXRegExp',
+    'btford.socket-io'
     ])
     .config(function($httpProvider, $stateProvider, $locationProvider, $urlRouterProvider, $mdThemingProvider, $mdAriaProvider) {
         $urlRouterProvider

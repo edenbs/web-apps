@@ -2,9 +2,11 @@ import Student from './student.model.js';
 import Grade from '../grade/grade.model.js';
 import createError from 'http-errors';
 import _ from 'lodash';
+import * as socket from '../../config/socketio';
 
 const errorIfEmpty = result => result || Promise.reject(createError(404));
 const errorIfNotSchool = (student, school) => student.school.equals(school) ? student : Promise.reject(createError(403));
+const notifyStudentChange = () => socket.onStudentsChange();
 
 export function index(req) {
     var query = {school: req.user.school};
@@ -35,6 +37,7 @@ export function create (req) {
 
     return new Student(data).save()
         .then(errorIfEmpty)
+        .then(notifyStudentChange)
         .then(_.noop);
 }
 
@@ -45,6 +48,7 @@ export function update(req) {
         .then(errorIfEmpty)
         .then(student => errorIfNotSchool(student, req.user.school))
         .then(student => student.set(data).save())
+        .then(notifyStudentChange)
         .then(_.noop);
 }
 
@@ -53,6 +57,7 @@ export function remove (req) {
         .then(errorIfEmpty)
         .then(student => errorIfNotSchool(student, req.user.school))
         .then(student => student.remove())
+        .then(notifyStudentChange)
         .then(_.noop);
 }
 
@@ -68,14 +73,6 @@ export function addGrade (req) {
 
     data.teacher = req.user;
 
-    /*return Student.findById(req.params.id)
-        .then(errorIfEmpty)
-        .then(student => errorIfNotSchool(student, req.user.school))
-        .then(() => new Grade(data).save())
-        .then(errorIfEmpty)
-        .then(grade => Student.update({_id: req.params.id}, {$push: {grades: grade._id}}))
-        .then(_.noop);*/
-
     return Student.findById(req.params.id)
         .populate('grades')
         .then(errorIfEmpty)
@@ -87,6 +84,7 @@ export function addGrade (req) {
                     student.grades.push(grade);
                     return student.save()
                 })
+                .then(notifyStudentChange)
                 .then(_.noop);
         })
 }
@@ -103,6 +101,7 @@ export function updateGrade(req) {
                 .then(grade => grade.set(data).save())
                 .then(() => student.populate('grades').execPopulate())
                 .then(() => student.updateAvgGrade())
+                .then(notifyStudentChange)
                 .then(_.noop);
         });
 }
@@ -119,5 +118,6 @@ export function removeGrade (req) {
         .then(() => Grade.findById(req.params.grade))
         .then(errorIfEmpty)
         .then(grade => grade.remove())
+        .then(notifyStudentChange)
         .then(_.noop)
 }
