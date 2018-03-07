@@ -5,7 +5,7 @@
                 <span>Students</span>
             </div>
         </md-toolbar>
-        <md-toolbar class="md-table-toolbar alternate" ng-show="selected.length">
+        <md-toolbar class="md-table-toolbar alternate" ng-show="selected.length ">
             <div class="md-toolbar-tools">
                 <span>{{selected.length}} {{selected.length > 1 ? 'items' : 'item'}} selected</span>
                 <span flex></span>
@@ -41,7 +41,7 @@
             <md-input-container flex class="input-container-no-spacer">
                 <label>Class</label>
                 <input name="class" ng-model="query.class" ng-change="onFilter()"
-                    ng-pattern='/^(\p{L}{1,2}-[1-9][0-9]?)$/'/>
+                       ng-pattern='/^(\p{L}{1,2}-[1-9][0-9]?)$/'/>
                 <div ng-messages="studentFilterForm.class.$error" md-auto-hide="true"
                      ng-if="studentFilterForm.class.$invalid && studentFilterForm.class.$touched">
                     <p ng-message="pattern">Class must be formatted כיתה-מספר</p>
@@ -49,7 +49,7 @@
             </md-input-container>
         </form>
         <md-table-container>
-            <table md-table md-row-select multiple ng-model="selected" md-progress="deferred">
+            <table md-table ng-attr-md-row-select="isEditor()"  multiple ng-model="selected" md-progress="deferred">
                 <thead md-head md-order="query.order" md-on-reorder="onOrderChange" >
                 <tr md-row>
                     <th md-column md-order-by="id">ID</th>
@@ -61,19 +61,23 @@
                 </tr>
                 </thead>
                 <tbody md-body>
-                <tr md-row md-select="item" md-select-id="id" md-auto-select ng-repeat="item in items.docs">
+                <tr md-row ng-attr-md-row-select="isEditor()" md-select="item" md-select-id="id" md-auto-select  ng-repeat="item in items.docs">
                     <td md-cell>{{ item.id }}</td>
-                    <td md-cell ng-click="edit($event, item, 'name.first')">{{ item.name.first }}</td>
-                    <td md-cell ng-click="edit($event, item, 'name.last')">{{ item.name.last }}</td>
-                    <td md-cell ng-click="edit($event, item, 'class')">{{ item.class }}</td>
-                    <td md-cell>
-                        <md-input-container>
+                    <td md-cell ng-if="isEditor()" ng-click="edit($event, item, 'name.first')">{{ item.name.first }}</td>
+                    <td md-cell  ng-if="!isEditor()">{{ item.name.first }}</td>
+                    <td md-cell ng-if="isEditor()" ng-click="edit($event, item, 'name.last')">{{ item.name.last }}</td>
+                    <td md-cell  ng-if="!isEditor()">{{ item.name.last }}</td>
+                    <td md-cell ng-if="isEditor()" ng-click="edit($event, item, 'class')">{{ item.class }}</td>
+                    <td md-cell ng-if="!isEditor()">{{ item.class }}</td>
+                    <td md-cell ng-if="isEditor()">
+                        <md-input-container >
                             <md-select ng-model="item.gender" class="md-no-underline" ng-change="changeGender(item)">
                                 <md-option value="female">Female</md-option>
                                 <md-option value="male">Male</md-option>
                             </md-select>
                         </md-input-container>
                     </td>
+                    <td md-cell ng-if="!isEditor()">{{ item.gender }}</td>
                     <td md-cell>{{ item.avgGrade }}</td>
                     <td md-cell>
                         <md-button ng-click="editGrades($event, item)" class="md-icon-button">
@@ -94,6 +98,6 @@
     </md-card>
 </div>
 <md-button class="md-fab md-fab-bottom-right md-primary" layout layout-align="center center"
-           ng-click="addItem($event)" aria-label="Add new constraint">
+           ng-click="addItem($event)" aria-label="Add new constraint" ng-show="isEditor()">
     <i class="mdi mdi-plus mdi-24px"></i>
 </md-button>

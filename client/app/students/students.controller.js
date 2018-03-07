@@ -1,9 +1,8 @@
 ﻿'use strict';
 
-angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students, $users, $q, $mdDialog,$mdToast) {
+angular.module('classify').controller('StudentsController', function($scope, $mdEditDialog, students, $students,$users, $q, $mdDialog,$mdToast,auth) {
     $scope.items = students;
     $scope.selected = [];
-
     $scope.query = {
         sort: 'name.first',
         limit: 5,
@@ -139,6 +138,7 @@ angular.module('classify').controller('StudentsController', function($scope, $md
     };
 
     $scope.editGrades = function (ev, item) {
+
         $mdDialog.show({
             controller: 'EditGrades',
             templateUrl: 'app/students/edit-grades/edit-grades.html',
@@ -151,14 +151,21 @@ angular.module('classify').controller('StudentsController', function($scope, $md
                     return $students.grades({id: item._id}).$promise;
                 },
                 subjects: function () {
-                    return $users.mySubjects({limit: 1}).$promise;
+                    if($scope.isEditor()) {
+                        return $users.mySubjects({limit: 1}).$promise;
+                    } else {
+                        return [];
+                    }
                 }
             }
-        })
-            .then(function (student) {
+        }).then(function (student) {
                 $scope.getItems();
             });
 
         ev.stopPropagation();
-    }
+    };
+
+    $scope.isEditor = function () {
+        return auth.hasRole('editor');
+    };
 });

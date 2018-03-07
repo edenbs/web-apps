@@ -10,7 +10,7 @@ router.post('/', hasRole('editor'), controller.create);
 router.put('/:id', hasRole('editor'), controller.update);
 router.delete('/:id', hasRole('editor'), controller.remove);
 
-router.get('/:id/grades', hasRole('editor'), controller.grades);
+router.get('/:id/grades', hasRole(['manager', 'editor', 'viewer']), controller.grades);
 router.post('/:id/grades', hasRole('editor'), controller.addGrade);
 router.put('/:id/grades/:grade', hasRole('editor'), controller.updateGrade);
 router.delete('/:id/grades/:grade', hasRole('editor'), controller.removeGrade);

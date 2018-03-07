@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('classify')
-    .controller('EditGrades', function ($scope, $mdDialog, $students, $users, grades, student, subjects, $mdToast) {
+    .controller('EditGrades', function ($scope, $mdDialog, $students, $users, grades, student, subjects, $mdToast,auth) {
         $scope.student = student;
         $scope.grades = grades;
         $scope.mySubjects = subjects;
@@ -63,5 +63,10 @@ angular.module('classify')
 
         $scope.done = function () {
             $mdDialog.hide();
-        }
+        };
+
+        $scope.isEditor = function () {
+            return auth.hasRole('editor');
+        };
+
     });
