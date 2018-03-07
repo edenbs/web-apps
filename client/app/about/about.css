@@ -1,0 +1,12 @@
+.title{
+    text-shadow: 5px 2px #e2dee0;
+}
+video{
+    border: #e24223;
+    border-radius: 20px;
+}
+footer{
+    position:fixed;
+    bottom:0px;
+    width:100%;
+}

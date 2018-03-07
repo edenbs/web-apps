@@ -32,7 +32,12 @@ angular.module('classify')
             text: 'Statistics',
             state: 'shell.statistics',
             iconClass: 'account'
-        }];
+        },
+            {
+                text: 'About',
+                state: 'shell.about',
+                iconClass: 'account'
+            }];
 
         $scope.menuList = _.filter(menuList, function (item) {
             var role = ($state.get(item.state).data || {}).requiredRole;

@@ -1,5 +1,5 @@
 .chart {
-    background: #eee;
+    background: transparent;
     padding: 3px;
 }
 
@@ -23,7 +23,7 @@
 #gradechart {
     height: 250px;
     width: 900px;
-    background: #eee;
+    background-color: #3c90be;
 }
 
 svg{
