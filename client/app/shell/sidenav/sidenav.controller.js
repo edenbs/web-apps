@@ -28,6 +28,10 @@ angular.module('classify')
             text: 'Students',
             state: 'shell.students',
             iconClass: 'account'
+        },{
+            text: 'Statistics',
+            state: 'shell.statistics',
+            iconClass: 'account'
         }];
 
         $scope.menuList = _.filter(menuList, function (item) {

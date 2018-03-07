@@ -9,7 +9,7 @@ export function avgGradeInClass(req) {
             _id: '$class',
             averageGrade: {$avg: '$avgGrade'}
         }
-    }]).then(result => console.log(result));
+    }]);
 }
 
 export function numInClass(req) {
@@ -18,5 +18,5 @@ export function numInClass(req) {
             _id: '$class',
             count: {$sum: 1}
         }
-    }]).then(result => console.log(result));
+    }]);
 }

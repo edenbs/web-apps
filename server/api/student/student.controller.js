@@ -104,7 +104,7 @@ export function updateGrade(req) {
                 .then(() => student.populate('grades').execPopulate())
                 .then(() => student.updateAvgGrade())
                 .then(_.noop);
-        })
+        });
 }
 
 export function removeGrade (req) {
