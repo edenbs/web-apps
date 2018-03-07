@@ -48,12 +48,16 @@ angular.module('classify')
                 });
         };
 
-        $scope.add = function () {
+        $scope.add = function (form) {
             $students.addGrade({id: student._id}, $scope.newGrade).$promise
                 .then(function() {
                     refreshGrades();
                     refreshMySubjects();
+
                     $scope.newGrade = {};
+                    form.$setPristine();
+                    form.$setUntouched();
+
                     $mdToast.showSimple('Grade was added successfully');
                 })
                 .catch(function() {

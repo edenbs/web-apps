@@ -56,7 +56,7 @@ angular.module('classify').controller('TeachersController', function($scope, $md
                 $mdToast.showSimple('Teacher  added successfully');
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error adding teacher');
+                if (err) $mdToast.showSimple('Error adding teacher');
             });
     };
 

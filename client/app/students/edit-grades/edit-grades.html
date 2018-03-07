@@ -35,35 +35,35 @@
                 </md-button>
             </ng-form>
         </md-content>
-        <form ng-if="isEditor()" name="newGradeForm" layout="row" flex="40" layout-margin class="add-grade">
+        <ng-form ng-if="isEditor()" name="addGradeForm" layout="row" flex="40" layout-margin class="add-grade">
             <md-input-container  flex="30">
                 <md-datepicker name="created" ng-model="newGrade.created" class="grades-datepicker" md-hide-icons="calendar" placeholder="Date Of Test" required md-no-asterisk></md-datepicker>
-                <div ng-messages="newGradeForm.created.$error" md-auto-hide="true"
-                     ng-if="newGradeForm.created.$invalid && newGradeForm.created.$touched">
+                <div ng-messages="addGradeForm.created.$error" md-auto-hide="true"
+                     ng-if="addGradeForm.created.$invalid && addGradeForm.created.$touched">
                     <p ng-message="required">Date is required</p>
                 </div>
             </md-input-container>
             <md-input-container flex="30">
                 <input name="subject" ng-model="newGrade.subject" placeholder="Subject" required md-no-asterisk/>
-                <div ng-messages="newGradeForm.subject.$error" md-auto-hide="true"
-                     ng-if="newGradeForm.subject.$invalid && newGradeForm.subject.$touched">
+                <div ng-messages="addGradeForm.subject.$error" md-auto-hide="true"
+                     ng-if="addGradeForm.subject.$invalid && addGradeForm.subject.$touched">
                     <p ng-message="required">Subject is required</p>
                 </div>
                 <span class="hint hint-subject" ng-click="setSubject(mySubjects[0])">(Your most graded subject is {{mySubjects[0]}})</span>
             </md-input-container>
             <md-input-container flex="30">
                 <input name="score" ng-model="newGrade.score" placeholder="Score" ng-pattern="/^([0-9]|[1-8][0-9]|9[0-9]|100)$/" required md-no-asterisk/>
-                <div ng-messages="newGradeForm.score.$error" md-auto-hide="true"
-                     ng-if="newGradeForm.score.$invalid && newGradeForm.score.$touched">
+                <div ng-messages="addGradeForm.score.$error" md-auto-hide="true"
+                     ng-if="addGradeForm.score.$invalid && addGradeForm.score.$touched">
                     <p ng-message="required">Score is required</p>
                     <p ng-message="pattern">Score must be between 0 to 100</p>
                 </div>
             </md-input-container>
-            <md-button ng-if="isEditor()" ng-click="add()" class="md-icon-button" flex="5" ng-disabled="newGradeForm.$invalid">
+            <md-button ng-if="isEditor()" ng-click="add(addGradeForm)" class="md-icon-button" flex="5" ng-disabled="addGradeForm.$invalid">
                 <md-tooltip>Add</md-tooltip>
                 <i class="mdi mdi-content-save mdi-24px"></i>
             </md-button>
-        </form>
+        </ng-form>
     </md-dialog-content>
     <md-dialog-actions>
         <md-button ng-click="done()" class="md-primary">Done</md-button>

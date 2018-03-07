@@ -26,7 +26,12 @@
             </md-input-container>
             <md-input-container>
                 <label>Class</label>
-                <input name="class" ng-model="student.class" required/>
+                <input name="class" ng-model="student.class" required
+                       ng-pattern='/^(\p{L}{1,2}-[1-9][0-9]?)$/'/>
+                <div ng-messages="addStudentForm.class.$error" md-auto-hide="true"
+                     ng-if="addStudentForm.class.$invalid && addStudentForm.class.$touched">
+                    <p ng-message="pattern">Class must be formatted כיתה-מספר</p>
+                </div>
             </md-input-container>
         </md-dialog-contnet>
         <md-dialog-actions>

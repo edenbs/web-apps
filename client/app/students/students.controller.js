@@ -94,7 +94,7 @@ angular.module('classify').controller('StudentsController', function($scope, $md
                 $mdToast.showSimple('Student added successfully');
             })
             .catch(function (err) {
-                $mdToast.showSimple('Error adding student');
+                if (err) $mdToast.showSimple('Error adding student');
             });
     };
 
