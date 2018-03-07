@@ -16,11 +16,11 @@
     text-align: right;
     padding: 3px;
     margin: 5px;
-    color: white;
+    color: black;
     box-shadow: 2px 2px 2px #666;
 }
 
-#lineChart {
+#gradechart {
     height: 250px;
     width: 900px;
     background: #eee;
