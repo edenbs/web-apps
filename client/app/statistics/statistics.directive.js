@@ -16,7 +16,7 @@ angular.module('classify')
                         return d.count + "%";
                     })
                     .text(function (d) {
-                        return d._id;
+                        return d._id + ': ' + d.count;
                     });
             }
         };
@@ -38,7 +38,7 @@ angular.module('classify')
                         return d.averageGrade + "%";
                     })
                     .text(function (d) {
-                        return d._id ;
+                        return d._id + ': ' + d.averageGrade;
                     });
             }
         };

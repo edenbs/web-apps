@@ -49,7 +49,7 @@
                      ng-if="addGradeForm.subject.$invalid && addGradeForm.subject.$touched">
                     <p ng-message="required">Subject is required</p>
                 </div>
-                <span class="hint hint-subject" ng-click="setSubject(mySubjects[0])">(Your most graded subject is {{mySubjects[0]}})</span>
+                <span ng-if="mySubjects.length !== 0" class="hint hint-subject" ng-click="setSubject(mySubjects[0])">(Your most graded subject is {{mySubjects[0]}})</span>
             </md-input-container>
             <md-input-container flex="30">
                 <input name="score" ng-model="newGrade.score" placeholder="Score" ng-pattern="/^([0-9]|[1-8][0-9]|9[0-9]|100)$/" required md-no-asterisk/>
