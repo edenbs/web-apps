@@ -74,16 +74,14 @@ export function addGrade (req) {
     data.teacher = req.user;
 
     return Student.findById(req.params.id)
-        .populate('grades')
         .then(errorIfEmpty)
         .then(student => errorIfNotSchool(student, req.user.school))
         .then(student => {
             return new Grade(data).save()
                 .then(errorIfEmpty)
-                .then(grade => {
-                    student.grades.push(grade);
-                    return student.save()
-                })
+                .then(grade => Student.findOneAndUpdate({_id: req.params.id}, {$push: {grades: grade._id}}, {new: true})
+                        .exec())
+                .then(student => student.updateAvgGrade())
                 .then(notifyStudentChange)
                 .then(_.noop);
         })
@@ -99,7 +97,6 @@ export function updateGrade(req) {
             return Grade.findById(req.params.grade)
                 .then(errorIfEmpty)
                 .then(grade => grade.set(data).save())
-                .then(() => student.populate('grades').execPopulate())
                 .then(() => student.updateAvgGrade())
                 .then(notifyStudentChange)
                 .then(_.noop);
@@ -108,13 +105,11 @@ export function updateGrade(req) {
 
 export function removeGrade (req) {
     return Student.findById(req.params.id)
-        .populate('grades')
         .then(errorIfEmpty)
         .then(student => errorIfNotSchool(student, req.user.school))
-        .then(student => {
-            _.remove(student.grades, grade => grade._id.toString() === req.params.grade);
-            return student.save();
-        })
+        .then(student => Student.findOneAndUpdate({_id: req.params.id}, {$pull: {grades: req.params.grade}}, {new: true})
+            .exec())
+        .then(student => student.updateAvgGrade())
         .then(() => Grade.findById(req.params.grade))
         .then(errorIfEmpty)
         .then(grade => grade.remove())

@@ -54,20 +54,28 @@ studentSchema.plugin(idvalidator);
 studentSchema.plugin(mongoosePaginate);
 
 studentSchema.pre('save', function(next) {
-    this.calcAvgGrade();
-    next();
+    var self = this;
+    this.populate('grades').execPopulate().then(() =>{
+        self.calcAvgGrade();
+        next();
+    })
+    .catch(next);
 });
 
 studentSchema.methods.calcAvgGrade = function () {
     if (this.grades && this.grades.length) {
         this.avgGrade = _.meanBy(this.grades, grade => grade.score);
+    } else {
+        this.avgGrade = 0;
     }
 };
 
 studentSchema.methods.updateAvgGrade = function () {
-    this.calcAvgGrade();
-
-    return this.save();
+    var self = this;
+    return this.populate('grades').execPopulate().then(() => {
+            self.calcAvgGrade();
+            return self.save();
+        })
 };
 
 export default createSeedModel('Student', studentSchema, seed);
