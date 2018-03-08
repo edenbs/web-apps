@@ -1,8 +1,12 @@
-<div>
-    <h5>The classes students capicity</h5>
-    <bars-chart chart-data="classSizeData"></bars-chart>
-</div>
-<div>
-    <h5>The average grades of school classes</h5>
-    <gradechart id="gradechart" chart-data="avgGradeData"></gradechart>
+<div layout-margin>
+    <div>
+        <h5>The classes students capicity</h5>
+        <bars-chart chart-data="classSizeData" ng-if="classSizeData.length !== 0"></bars-chart>
+        <span ng-if="classSizeData.length === 0">Nothing to show yet..</span>
+    </div>
+    <div>
+        <h5>The average grades of school classes</h5>
+        <gradechart id="gradechart" chart-data="avgGradeData" ng-if="avgGradeData.length !== 0"></gradechart>
+        <span ng-if="avgGradeData.length === 0">Nothing to show yet..</span>
+    </div>
 </div>

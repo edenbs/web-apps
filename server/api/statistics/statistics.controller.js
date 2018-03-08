@@ -4,8 +4,9 @@ import Student from '../student/student.model';
 const errorIfEmpty = result => result || Promise.reject(createError(404));
 
 export function avgGradeInClass(req) {
-    return Student.aggregate([{
-        $group: {
+    return Student.aggregate([
+        { $match: { school: req.user.school } },
+        { $group: {
             _id: '$class',
             averageGrade: {$avg: '$avgGrade'}
         }
@@ -13,8 +14,9 @@ export function avgGradeInClass(req) {
 }
 
 export function numInClass(req) {
-    return Student.aggregate([{
-        $group: {
+    return Student.aggregate([
+        { $match: { school: req.user.school } },
+        { $group: {
             _id: '$class',
             count: {$sum: 1}
         }

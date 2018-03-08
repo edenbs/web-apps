@@ -13,7 +13,7 @@ angular.module('classify')
                     .enter().append("div")
                     .transition().ease(d3.easeLinear)
                     .style("width", function (d) {
-                        return d.count + "%";
+                        return d.count*0.9 + "%";
                     })
                     .text(function (d) {
                         return d._id + ': ' + d.count;
@@ -35,7 +35,7 @@ angular.module('classify')
                     .enter().append("div")
                     .transition().ease(d3.easeLinear)
                     .style("width", function (d) {
-                        return d.averageGrade + "%";
+                        return d.averageGrade*0.9 + "%";
                     })
                     .text(function (d) {
                         return d._id + ': ' + d.averageGrade;
